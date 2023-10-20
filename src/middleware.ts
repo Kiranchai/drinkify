@@ -9,4 +9,8 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/static")
   )
     return NextResponse.next();
+
+  const response: NextResponse = new NextResponse();
+  response.headers.set("Cache-Control", "public");
+  return response;
 }
