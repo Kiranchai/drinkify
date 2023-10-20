@@ -46,7 +46,7 @@ const Navbar = () => {
         <div className={styles.navbar_left}>
           <span>
             <Link className={styles.logo_link} href="/">
-              <Image alt="drink logo" src={logo} height={50} width={80} />
+              <Image alt="drink logo" src={logo} />
             </Link>
           </span>
 

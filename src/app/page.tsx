@@ -56,8 +56,6 @@ export default function Home() {
               src={phoneMockup}
               alt="phone mockup"
               loading="eager"
-              width={350}
-              height={500}
             />
           </div>
         </div>
@@ -136,8 +134,6 @@ export default function Home() {
               src={partyImage}
               className={styles.benefits_img}
               alt="people partying"
-              width={250}
-              height={120}
             />
           </div>
           <div className={`${styles.benefits_col} ${styles.mid}`}>
@@ -145,8 +141,6 @@ export default function Home() {
               src={partyImage2}
               className={styles.benefits_img}
               alt="people drinking "
-              width={250}
-              height={120}
             />
             <div className={styles.benefits_header_wrapper}>
               <div className={styles.benefits_icon_wrapper}>
@@ -172,8 +166,6 @@ export default function Home() {
               src={partyImage3}
               className={styles.benefits_img}
               alt="campfire party"
-              width={250}
-              height={120}
             />
           </div>
         </div>
