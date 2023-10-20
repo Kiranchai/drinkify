@@ -56,6 +56,7 @@ export default function Home() {
               src={phoneMockup}
               alt="phone mockup"
               loading="eager"
+              priority
             />
           </div>
         </div>
