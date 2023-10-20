@@ -1,0 +1,138 @@
+.navbar {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  height: var(--navbar-normal-height);
+  background-color: var(--bg-main);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navbar_list {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  transition: opacity 1s ease-in-out;
+}
+
+.navbar_link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  transition: all 0.2s ease-in-out;
+  font-weight: 600;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+.navbar_link:hover {
+  color: rgb(175, 175, 175);
+}
+
+.logo_link {
+  /* font-weight: 700;
+      font-size: 2rem;
+      text-decoration: none;
+      color: white;
+      font-style: italic; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo_link > img {
+  height: 100%;
+  width: 100%;
+  max-height: var(--navbar-normal-height);
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.active {
+  color: white;
+}
+
+.navbar_separator {
+  margin-top: var(--navbar-normal-height);
+}
+
+.navbar_right {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger_span {
+  display: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .navbar_separator {
+    margin-top: var(--navbar-height);
+  }
+
+  .navbar {
+    height: var(--navbar-height);
+  }
+
+  .logo_link > img {
+    max-height: var(--navbar-height);
+    padding: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 890px) {
+  .navbar {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hamburger_span {
+    display: block;
+    color: white;
+  }
+
+  .navbar_list {
+    display: none;
+    position: inherit;
+    top: var(--navbar-height);
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+  }
+
+  .navbar_list li {
+    width: 100%;
+    background-color: rgb(73, 49, 72);
+    border-bottom: 1px groove rgb(131, 131, 131);
+  }
+
+  .navbar_left {
+    width: 100%;
+    display: flex;
+    height: var(--navbar-height);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar_link {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .navbar_link:hover {
+    background-color: lightgray;
+  }
+
+  .showed {
+    display: block;
+  }
+}

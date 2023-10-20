@@ -1,0 +1,107 @@
+.product_grid_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 60rem;
+  gap: 3rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  margin-bottom: 10rem;
+}
+
+.img_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: radial-gradient(circle, rgb(43, 5, 36) 0%, rgb(0, 0, 0) 90%);
+  -webkit-box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1);
+  -moz-box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1);
+  box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1);
+}
+
+.img_wrapper > img {
+  aspect-ratio: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  /* padding-right: 1.5rem; */
+  text-shadow: 2px 2px 2px black;
+}
+
+.product_title {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+.product_price {
+  font-size: 1.5rem;
+}
+
+.product_description {
+  font-weight: 200;
+  color: rgb(180, 180, 180);
+  padding: 0.75rem 0;
+}
+
+.product_buy_btn {
+  width: 100%;
+  color: white;
+  padding: 1rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: rgb(116, 20, 20);
+  border: none;
+  text-shadow: 1px 1px 1px black;
+  transition: all 0.2s ease-in-out;
+  -webkit-box-shadow: 0px 7px 30px 0px rgba(34, 34, 37, 1);
+  -moz-box-shadow: 0px 7px 30px 0px rgba(34, 34, 37, 1);
+  box-shadow: 0px 7px 30px 0px rgba(34, 34, 37, 1);
+}
+
+.product_buy_btn:hover {
+  background-color: rgb(92, 15, 15);
+}
+
+.custom_shape_divider_bottom_1681672643 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg) translateY(-2%);
+}
+
+.custom_shape_divider_bottom_1681672643 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 100px;
+}
+
+.custom_shape_divider_bottom_1681672643 .shape_fill {
+  fill: #1e0324;
+}
+
+@media only screen and (max-width: 600px) {
+  .product_grid_container {
+    margin-top: 1rem;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1.5rem;
+  }
+  .details {
+    padding-right: 0;
+  }
+  .product_title {
+    margin-top: 0.5rem;
+  }
+}

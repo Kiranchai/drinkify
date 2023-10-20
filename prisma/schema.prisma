@@ -1,0 +1,59 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                     String                  @id @default(cuid())
+  createdAt              DateTime                @default(now())
+  email                  String                  @unique
+  emailVerified          Boolean                 @default(false)
+  password               String
+  emailVerificationToken EmailVerificationToken?
+  ownedProducts          Product[]
+}
+
+model EmailVerificationToken {
+  userId   String   @unique
+  hash     String   @unique
+  expireAt DateTime @default(dbgenerated("now() + interval '30 minutes'")) @ignore
+  user     User     @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  name        String
+  stripeId    String     @unique
+  price       String
+  description String
+  pubName     String     @unique
+  thumbnail   String
+  gameType    String
+  cards       Card[]
+  DemoCard    DemoCard[]
+  owners      User[]
+}
+
+model Card {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  title       String
+  description String
+  productId   String
+  Product     Product? @relation(fields: [productId], references: [id])
+}
+
+model DemoCard {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  title       String
+  description String
+  productId   String
+  Product     Product? @relation(fields: [productId], references: [id])
+}
