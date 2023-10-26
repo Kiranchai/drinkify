@@ -7,7 +7,9 @@ import Image from "next/image";
 const prisma = new PrismaClient();
 
 export default async function Offer() {
-  const products = await prisma.product.findMany();
+  const products = await prisma.product.findMany({
+    orderBy: { createdAt: "asc" },
+  });
 
   return (
     <div className={styles.offer}>
@@ -25,6 +27,12 @@ export default async function Offer() {
                   href={`/offer/${product.pubName}`}
                   key={product.pubName as React.Key}
                 >
+                  {product.pubName === "alkokarty" && (
+                    <span className={styles.offer_bestseller_flag}>
+                      BESTSELLER
+                    </span>
+                  )}
+
                   <div className={styles.offer_image_wrapper}>
                     <Image
                       src={product.thumbnail}

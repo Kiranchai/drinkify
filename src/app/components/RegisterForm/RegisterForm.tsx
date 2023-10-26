@@ -4,15 +4,17 @@ import { ThemeProvider } from "@mui/material/styles";
 import { CircularProgress, TextField } from "@mui/material";
 import { TextFieldTheme } from "@/app/themes/MuiTextFieldTheme";
 import styles from "@/app/(pages)/login/page.module.css";
+import EmailVerificationModal from "@/app/components/EmailVerificationModal/EmailVerificationModal";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [modalShown, setModalShown] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -44,7 +46,6 @@ export default function RegisterForm() {
         if (data.type === "error") {
           setError(data.message);
         } else {
-          setModalMessage(data.message);
           setModalShown(true);
         }
       })
@@ -60,6 +61,14 @@ export default function RegisterForm() {
 
   return (
     <>
+      {modalShown && (
+        <EmailVerificationModal
+          onClose={() => {
+            router.push("/login");
+          }}
+          open={modalShown}
+        />
+      )}
       {error && <div className={styles.error_container}>{error}</div>}
 
       <form className={styles.login_form} onSubmit={handleSubmit} noValidate>

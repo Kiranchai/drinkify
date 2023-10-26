@@ -13,6 +13,9 @@ import phoneMockup from "public/phone_mockup.png";
 import partyImage from "public/party_1.jpg";
 import partyImage2 from "public/party_2.jpg";
 import partyImage3 from "public/party_3.jpg";
+import cards from "public/cards.webp";
+
+export const dynamic = "force-static";
 
 export default function Home() {
   return (
@@ -86,6 +89,11 @@ export default function Home() {
       </div>
 
       <section className={styles.about_section}>
+        <article></article>
+        <div>
+          <Image src={cards} alt="alcocards" />
+        </div>
+
         <h2 className={styles.about_header}>Dlaczego Drinkify?</h2>
         <div className={styles.about_advantage_container}>
           <AdvantageContainer

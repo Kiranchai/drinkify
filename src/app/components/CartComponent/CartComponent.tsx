@@ -8,8 +8,10 @@ import { ImCross } from "react-icons/im";
 import styles from "@/app/(pages)/cart/page.module.css";
 import cardsStyles from "@/app/(pages)/cards/page.module.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function CartComponent() {
+  const router = useRouter();
   const { cartItems, removeFromCart } = useCart();
   const [total, setTotal] = useState(0);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -64,6 +66,8 @@ export default function CartComponent() {
                       className={styles.cart_item_img}
                       src={item.thumbnail}
                       alt="product thumbnail"
+                      width={60}
+                      height={60}
                     />
                   </div>
                   <span className={styles.cart_item_name}>{item.name}</span>
@@ -86,38 +90,31 @@ export default function CartComponent() {
         <span>Suma: {`${total} zł`}</span>
         <button
           className={styles.buy_btn}
-          onClick={() => {
-            // setButtonDisabled(true);
-            // setError(null);
-            // axios
-            //   .post(
-            //     `${SERVER_DOMAIN}/api/payments/create-checkout-session`,
-            //     {
-            //       item: cartItems,
-            //     },
-            //     {
-            //       headers: {
-            //         "x-access-token": sessionStorage.getItem("token") as string,
-            //       },
-            //     }
-            //   )
-            //   .then((res) => {
-            //     if (res.data.url) {
-            //       window.location.href = res.data.url;
-            //     } else if (res.data.type === "auth-fail") {
-            //       navigate("/login");
-            //     } else if (res.data.type === "error") {
-            //       setError(res.data.message);
-            //     } else {
-            //       console.log(res.data);
-            //     }
-            //   })
-            //   .catch((err) => {
-            //     console.log(err);
-            //   })
-            //   .finally(() => {
-            //     setButtonDisabled(false);
-            //   });
+          onClick={async () => {
+            setButtonDisabled(true);
+            setError(null);
+            const res = await fetch("/api/payments/create-checkout-session", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                cartItems,
+              }),
+            });
+            if (res.status === 401) {
+              return router.push("/login");
+            }
+
+            const data = await res.json();
+
+            if (data.url) {
+              router.replace(data.url);
+            }
+            if (data.type === "error") {
+              setError(data.message);
+            }
+            setButtonDisabled(false);
           }}
         >
           {buttonDisabled ? <CircularProgress /> : "Zapłać"}

@@ -14,7 +14,7 @@ import { GiCardPlay } from "react-icons/gi";
 import logo from "../../../../public/logo-no-background.png";
 import Link from "next/link";
 import Image from "next/image";
-import { useCart } from "../../contexts/CartContext";
+import { useCart } from "@/app/contexts/CartContext";
 import styles from "@/app/components/Navbar/Navbar.module.css";
 import { signOut, useSession } from "next-auth/react";
 // import RedeemCodeModal from "../Modals/RedeemCodeModal/RedeemCodeModal";
@@ -46,7 +46,7 @@ const Navbar = () => {
         <div className={styles.navbar_left}>
           <span>
             <Link className={styles.logo_link} href="/">
-              <Image alt="drink logo" src={logo} />
+              <Image alt="drink logo" src={logo} priority />
             </Link>
           </span>
 

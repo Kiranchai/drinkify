@@ -11,7 +11,7 @@ export default async function GameSection({ params }) {
   const session = await getServerSession();
 
   if (!session || !session.user.email) {
-    redirect("/login");
+    return redirect("/login");
   }
 
   const product = await prisma.product.findUnique({
@@ -24,7 +24,7 @@ export default async function GameSection({ params }) {
   });
 
   if (!owners.includes(session.user.email)) {
-    redirect(`/offer/${pubName}`);
+    return redirect(`/offer/${pubName}`);
   }
 
   return (

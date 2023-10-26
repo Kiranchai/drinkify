@@ -5,6 +5,7 @@ import { Provider } from "@/app/provider.js";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { getServerSession } from "next-auth";
+import { authOptions } from "./utils/authOptions";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -21,7 +22,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="pl">
@@ -30,6 +31,7 @@ export default async function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <div id="portal"></div>
         </Provider>
       </body>
     </html>

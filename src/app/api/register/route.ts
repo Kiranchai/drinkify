@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse, NextRequest } from "next/server";
 import cryptoRandomString from "crypto-random-string";
+import { sendVerificationLink } from "@/app/utils/emailSender";
 
 const prisma = new PrismaClient();
 
@@ -79,6 +80,7 @@ export async function POST(request: NextRequest) {
     });
 
     //SEND AN EMAIL
+    await sendVerificationLink(user.email, emailVerificationToken.hash);
 
     return NextResponse.json(
       {

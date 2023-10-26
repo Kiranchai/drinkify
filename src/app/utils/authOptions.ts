@@ -29,6 +29,9 @@ export const authOptions: NextAuthOptions = {
             where: {
               email: credentials.email,
             },
+            include: {
+              ownedProducts: {},
+            },
           });
 
           if (!user) {
@@ -47,6 +50,7 @@ export const authOptions: NextAuthOptions = {
             return { error: "Twój email jest niezweryfikowany!" };
           }
 
+          // console.log(user);
           return user;
         } catch (err) {
           console.error(err);
@@ -67,9 +71,27 @@ export const authOptions: NextAuthOptions = {
         return true;
       }
     },
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.userId = user.id;
+        token.email = user.email;
+        token.ownedProducts = user.ownedProducts;
+      }
+      return token;
+    },
+    async session({ session, token }: any) {
+      session = {
+        ...session,
+        user: {
+          id: token.userId,
+          email: token.email,
+          ownedProducts: token.ownedProducts,
+        },
+      };
+      return session;
+    },
   },
   secret: process.env.SECRET,
-  debug: process.env.NODE_ENV === "development",
   pages: {
     signIn: "/login",
   },

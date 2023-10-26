@@ -7,6 +7,16 @@ import Game from "@/app/components/Game/Game";
 
 const prisma = new PrismaClient();
 
+export async function generateStaticParams() {
+  const products = await prisma.product.findMany();
+
+  return products.map((product) => {
+    pubName: product.pubName;
+  });
+}
+
+export const dynamic = "force-dynamic";
+
 export default async function Product({ params }) {
   const { pubName } = params;
   const product = await prisma.product.findUnique({
@@ -21,9 +31,6 @@ export default async function Product({ params }) {
       },
       DemoCard: {},
     },
-  });
-  const owners = product.owners.map((obj) => {
-    return obj.email;
   });
 
   return (
@@ -48,16 +55,18 @@ export default async function Product({ params }) {
                 alt="drink"
                 width={300}
                 height={200}
+                priority
               />
             </div>
             <div className={`${styles.product_grid_item} ${styles.details}`}>
               <h1 className={styles.product_title}>{product.name}</h1>
               <span className={styles.product_price}>{product.price} zł</span>
-              <p className={styles.product_description}>
-                {product.description}
-              </p>
+              <p
+                className={styles.product_description}
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              ></p>
 
-              <BuyNowButton owners={owners} />
+              <BuyNowButton product={product} />
             </div>
           </div>
           <div className={styles.custom_shape_divider_bottom_1681672643}>

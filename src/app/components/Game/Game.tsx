@@ -7,6 +7,7 @@ import { MdArrowForward, MdArrowBack } from "react-icons/md";
 import { CardTypes } from "@/app/types/CardTypes";
 import styles from "@/app/(pages)/cards/[pubName]/page.module.css";
 import Image from "next/image";
+import TBCard from "../TBCard/TBCard";
 
 const Game = ({ cards, isDemo, cardImage, gameType }) => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -166,16 +167,16 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
             </div>
           </>
         );
-      //   case CardTypes.TB:
-      //     return (
-      //       <>
-      //         <TBCard
-      //           title={card.title}
-      //           forbiddenWords={card.forbiddenWords}
-      //           image={cardImage}
-      //         />
-      //       </>
-      //     );
+      case CardTypes.TB:
+        return (
+          <>
+            <TBCard
+              title={card.title}
+              forbiddenWords={card.forbiddenWords}
+              image={cardImage}
+            />
+          </>
+        );
     }
   };
 

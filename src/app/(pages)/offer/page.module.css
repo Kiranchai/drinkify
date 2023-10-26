@@ -32,6 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* max-width: 18rem; */
 }
 
 .offer_image_wrapper {
@@ -53,6 +54,7 @@
 }
 
 .offer_inner_wrapper {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -68,6 +70,21 @@
   display: flex;
   justify-content: space-between;
   text-shadow: 2px 2px 2px black;
+}
+
+.offer_bestseller_flag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.75rem;
+  background-color: rgb(183, 0, 0);
+  padding: 0.25rem;
+  transform: translate(25%, -30%) rotate(25deg);
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
 }
 
 @media only screen and (max-width: 600px) {

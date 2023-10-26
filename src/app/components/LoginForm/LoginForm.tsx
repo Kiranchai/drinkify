@@ -5,7 +5,9 @@ import { TextField } from "@mui/material";
 import { TextFieldTheme } from "@/app/themes/MuiTextFieldTheme";
 import styles from "@/app/(pages)/login/page.module.css";
 import { CircularProgress } from "@mui/material";
-
+import Link from "next/link";
+import TokenResetModal from "@/app/components/TokenResetModal/TokenResetModal";
+import PasswordResetModal from "../PasswordResetModal/PasswordResetModal";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +18,8 @@ export function LoginForm() {
   const [error, setError] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [tokenResetModalShown, setTokenResetModalShown] = useState(false);
+  const [passwordResetModalShown, setPasswordResetModalShown] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +42,19 @@ export function LoginForm() {
 
   return (
     <>
+      <TokenResetModal
+        onClose={() => {
+          setTokenResetModalShown(false);
+        }}
+        open={tokenResetModalShown}
+      />
+      <PasswordResetModal
+        open={passwordResetModalShown}
+        onClose={() => {
+          setPasswordResetModalShown(false);
+        }}
+      />
+
       {error && <div className={styles.error_container}>{error}</div>}
       <form className={styles.login_form} onSubmit={handleSubmit} noValidate>
         <ThemeProvider theme={TextFieldTheme}>
@@ -69,11 +86,13 @@ export function LoginForm() {
             color: "white",
             cursor: "pointer",
             fontSize: ".95rem",
-            marginTop: ".5rem",
-            marginBottom: ".5rem",
+            marginTop: ".1rem",
+            marginBottom: ".1rem",
             opacity: ".9",
           }}
-          // onClick={handleResetPasswordModalDisplay}
+          onClick={() => {
+            setPasswordResetModalShown(true);
+          }}
         >
           Nie pamiętam hasła
         </span>
@@ -89,6 +108,41 @@ export function LoginForm() {
           )}
         </button>
       </form>
+      <span
+        style={{
+          paddingBlock: "1rem",
+          marginTop: ".75rem",
+          textAlign: "center",
+        }}
+      >
+        Nie posiadasz konta?{" "}
+        <Link
+          style={{
+            color: "var(--blueish)",
+          }}
+          href={"/register"}
+        >
+          Zarejestruj się
+        </Link>
+      </span>
+      <span
+        style={{
+          textAlign: "center",
+        }}
+      >
+        Twój link aktywacyjny wygasł?{" "}
+        <span
+          style={{
+            color: "var(--blueish)",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setTokenResetModalShown(true);
+          }}
+        >
+          Kliknij tutaj
+        </span>
+      </span>
     </>
   );
 }

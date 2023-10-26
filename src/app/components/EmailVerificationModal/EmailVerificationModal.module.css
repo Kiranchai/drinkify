@@ -1,0 +1,72 @@
+.modal {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1.25rem;
+  background-color: rgb(81, 71, 97);
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-shadow: 2px 5px 32px 0px rgb(23, 24, 31);
+  -moz-box-shadow: 2px 5px 32px 0px rgb(23, 24, 31);
+  box-shadow: 2px 5px 32px 0px rgb(23, 24, 31);
+}
+
+.modal_header {
+  font-size: 1.75rem;
+  text-shadow: 2px 2px 2px black;
+}
+
+.modal_message {
+  text-shadow: 2px 1px 1px black;
+  font-size: 1rem;
+  padding: 0.4rem 0 0.75rem 0;
+  color: rgb(202, 202, 202);
+}
+
+.modal_layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgb(0, 0, 0, 0.25);
+  backdrop-filter: blur(5px);
+}
+
+.cancel {
+  background-color: rgb(53, 53, 53);
+}
+
+.cancel:hover {
+  background-color: rgb(27, 27, 27);
+}
+
+.submit_btn {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--bg-main);
+  font-size: 1.15rem;
+  font-weight: 400;
+  background-color: rgb(54, 26, 54);
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit_btn:hover {
+  background-color: rgb(36, 17, 36);
+}
+
+.loading_anim {
+  padding: 0.5rem;
+}

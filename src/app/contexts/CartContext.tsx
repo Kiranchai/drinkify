@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useAuth } from "./AuthContext";
+import { useSession } from "next-auth/react";
 
 interface ICartItem {
   id: String;
@@ -40,8 +40,11 @@ const getLocalCart = () => {
 };
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const currentUser = useAuth();
-  const [cartItems, setCartItems] = useState<ICartItem[]>(getLocalCart());
+  const { data: user, status } = useSession();
+  const [cartItems, setCartItems] = useState(getLocalCart());
+  const ownedCards = user?.user.ownedProducts?.map((product) => {
+    return product.stripeId;
+  });
 
   const addToCart = (item: ICartItem) => {
     if (!(cartItems.filter((e) => e.name === item.name).length > 0)) {
@@ -58,11 +61,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    let userCards = currentUser?.currentUser?.cards;
-    if (userCards !== undefined) {
-      setCartItems(cartItems.filter((item) => !userCards?.includes(item.id)));
+    if (ownedCards !== undefined) {
+      setCartItems(cartItems.filter((item) => !ownedCards?.includes(item.id)));
     }
-  }, [currentUser]);
+  }, [user]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
