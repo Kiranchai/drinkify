@@ -79,7 +79,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    //SEND AN EMAIL
     await sendVerificationLink(user.email, emailVerificationToken.hash);
 
     return NextResponse.json(

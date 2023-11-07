@@ -52,7 +52,7 @@ export default async function MyCards() {
           <>
             <div className={styles.mycards_container}>
               {cards &&
-                cards.map((card) => {
+                cards.map((card, idx) => {
                   return (
                     <Link
                       href={`/cards/${card.pubName}`}
@@ -65,6 +65,7 @@ export default async function MyCards() {
                           alt="drink"
                           width={300}
                           height={300}
+                          loading={idx === 0 ? "eager" : "lazy"}
                         />
                       </div>
 

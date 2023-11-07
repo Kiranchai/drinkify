@@ -57,6 +57,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const clearCart = () => {
+    localStorage.removeItem("cart");
     setCartItems([]);
   };
 

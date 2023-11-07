@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 import { TextFieldTheme } from "@/app/themes/MuiTextFieldTheme";
@@ -9,14 +9,17 @@ import Link from "next/link";
 import TokenResetModal from "@/app/components/TokenResetModal/TokenResetModal";
 import PasswordResetModal from "../PasswordResetModal/PasswordResetModal";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [tokenResetModalShown, setTokenResetModalShown] = useState(false);
   const [passwordResetModalShown, setPasswordResetModalShown] = useState(false);
@@ -40,6 +43,53 @@ export function LoginForm() {
     setIsLoading(false);
   };
 
+  const checkForError = () => {
+    const error = searchParams.get("error");
+    if (error) {
+      switch (error) {
+        case "user_already_verified": {
+          setError("Twoje konto jest już zweryfikowane");
+          break;
+        }
+
+        case "link_expired_or_not_exists": {
+          setError("Link wygasł lub nie istnieje");
+          break;
+        }
+
+        case "an_error_occured": {
+          setError("Wystąpił błąd");
+          break;
+        }
+      }
+
+      router.push(pathName);
+    }
+  };
+
+  const checkForSuccess = () => {
+    const success = searchParams.get("success");
+    if (success) {
+      switch (success) {
+        case "user_verified_successfuly": {
+          setSuccess("Konto zweryfikowane pomyślnie");
+          break;
+        }
+
+        case "password_changed_successfuly": {
+          setSuccess("Zmiana hasła przebiegła pomyślnie");
+          break;
+        }
+      }
+      router.push(pathName);
+    }
+  };
+
+  useEffect(() => {
+    checkForError();
+    checkForSuccess();
+  }, []);
+
   return (
     <>
       <TokenResetModal
@@ -55,6 +105,7 @@ export function LoginForm() {
         }}
       />
 
+      {success && <div className={styles.success_container}>{success}</div>}
       {error && <div className={styles.error_container}>{error}</div>}
       <form className={styles.login_form} onSubmit={handleSubmit} noValidate>
         <ThemeProvider theme={TextFieldTheme}>

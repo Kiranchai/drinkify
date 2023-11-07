@@ -4,19 +4,20 @@ import { PrismaClient } from "@prisma/client";
 import styles from "./page.module.css";
 import Image from "next/image";
 
-const prisma = new PrismaClient();
-
 export default async function Offer() {
-  const products = await prisma.product.findMany({
-    orderBy: { createdAt: "asc" },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT}/api/products`,
+    { next: { revalidate: 3600 } }
+  );
+  const data = await res.json();
+  const { products } = data;
 
   return (
     <div className={styles.offer}>
       <section className={`mh ${styles.offer_section}`}>
         <h1 className={styles.offer_header}>Oferta</h1>
         <div className={styles.offer_products}>
-          {products.map((product) => {
+          {products.map((product, idx) => {
             return (
               <div
                 className={styles.offer_single_product}
@@ -39,6 +40,7 @@ export default async function Offer() {
                       alt="drink"
                       width={300}
                       height={220}
+                      loading={idx === 0 ? "eager" : "lazy"}
                     />
                   </div>
                   <div className={styles.offer_description_container}>

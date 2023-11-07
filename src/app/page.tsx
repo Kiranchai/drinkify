@@ -15,7 +15,7 @@ import partyImage2 from "public/party_2.jpg";
 import partyImage3 from "public/party_3.jpg";
 import cards from "public/cards.webp";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (

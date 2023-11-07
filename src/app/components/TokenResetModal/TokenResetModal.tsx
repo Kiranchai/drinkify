@@ -48,6 +48,7 @@ const Modal = ({ open, onClose }: TModalProps) => {
       .finally(() => {
         setIsLoading(false);
         setButtonDisabled(false);
+        setEmail("");
       });
   };
 
@@ -98,7 +99,10 @@ const Modal = ({ open, onClose }: TModalProps) => {
             </button>
             <button
               className={`${styles.submit_btn} ${styles.cancel}`}
-              onClick={onClose}
+              onClick={() => {
+                onClose();
+                setError("");
+              }}
             >
               Anuluj
             </button>

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hamburger from "hamburger-react";
-import { useAuth } from "../../contexts/AuthContext";
 import {
   MdLogout,
   MdShoppingCart,
@@ -17,6 +16,7 @@ import Image from "next/image";
 import { useCart } from "@/app/contexts/CartContext";
 import styles from "@/app/components/Navbar/Navbar.module.css";
 import { signOut, useSession } from "next-auth/react";
+import RedeemCodeModal from "../RedeemCodeModal/RedeemCodeModal";
 // import RedeemCodeModal from "../Modals/RedeemCodeModal/RedeemCodeModal";
 
 const Navbar = () => {
@@ -36,12 +36,12 @@ const Navbar = () => {
 
   return (
     <>
-      {/* <RedeemCodeModal
+      <RedeemCodeModal
         open={modalShown}
         onClose={() => {
           setModalShown(false);
         }}
-      /> */}
+      />
       <nav className={styles.navbar}>
         <div className={styles.navbar_left}>
           <span>
@@ -120,8 +120,6 @@ const Navbar = () => {
         </ul>
       </nav>
       <div className={styles.navbar_separator}></div>
-
-      {/* <Outlet /> */}
     </>
   );
 };
