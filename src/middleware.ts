@@ -13,9 +13,8 @@ export async function middleware(request: NextRequest) {
   //   }
   //   console.log(tokenFound);
   // }
-  console.log(request.ip);
-  console.log(request.geo.country);
-  console.log(request.geo.city);
+  console.log(request.headers["x-real-ip"]);
+  console.log(request.headers["x-forwarded-for"]);
 }
 
 export const config = {
