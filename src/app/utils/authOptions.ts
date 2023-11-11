@@ -2,9 +2,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "./db";
+import getLimiterHeaders from "./getLimiterHeaders";
+import rateLimiter from "./rateLimiter";
+import redisClient from "./redis";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -19,8 +20,25 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Hasło", type: "password" },
       },
-      async authorize(credentials): Promise<any> {
+      async authorize(credentials, request): Promise<any> {
         try {
+          const requestIp = request.headers["x-forwarded-for"] ?? "127.0.0.1";
+
+          const result = await rateLimiter(
+            redisClient,
+            requestIp,
+            10,
+            60,
+            "/login"
+          );
+
+          if (!result.success) {
+            return {
+              error: "Zbyt wiele prób. Spróbuj ponownie za chwilę",
+              type: "error",
+            };
+          }
+
           if (!credentials.email || !credentials.password) {
             return { error: "Nie podano danych" };
           }

@@ -1,11 +1,27 @@
 import { sendVerificationLink } from "@/app/utils/emailSender";
-import { PrismaClient } from "@prisma/client";
 import cryptoRandomString from "crypto-random-string";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/db";
+import getLimiterHeaders from "@/app/utils/getLimiterHeaders";
 
 export async function POST(request: NextRequest) {
+  const { limiter, headers } = await getLimiterHeaders({
+    request: request,
+    limitPerSecond: 3,
+    duration: 60,
+    endpoint: "verificationResendLink",
+  });
+
+  if (!limiter.success) {
+    return new NextResponse(
+      JSON.stringify({
+        message: "Zbyt wiele prób. Spróbuj ponownie za chwilę",
+        type: "error",
+      }),
+      { status: 429, headers: headers }
+    );
+  }
+
   const { email } = await request.json();
 
   if (!email) {
@@ -14,7 +30,7 @@ export async function POST(request: NextRequest) {
         type: "error",
         message: "Podaj adres email, na który ma być wysłany link",
       },
-      { status: 400 }
+      { status: 400, headers: headers }
     );
   }
 
@@ -31,10 +47,13 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json({
-        message:
-          "Jeśli konto istnieje, wysłaliśmy link aktywacyjny na podany email",
-      });
+      return NextResponse.json(
+        {
+          message:
+            "Jeśli konto istnieje, wysłaliśmy link aktywacyjny na podany email",
+        },
+        { status: 200, headers: headers }
+      );
     }
 
     if (user.emailVerified) {
@@ -43,7 +62,7 @@ export async function POST(request: NextRequest) {
           type: "error",
           message: "Konto jest już zweryfikowane",
         },
-        { status: 404 }
+        { status: 404, headers: headers }
       );
     }
 
@@ -66,10 +85,13 @@ export async function POST(request: NextRequest) {
 
     await sendVerificationLink(email, token.hash);
 
-    return NextResponse.json({
-      message:
-        "Jeśli konto istnieje, wysłaliśmy link aktywacyjny na podany email",
-    });
+    return NextResponse.json(
+      {
+        message:
+          "Jeśli konto istnieje, wysłaliśmy link aktywacyjny na podany email",
+      },
+      { status: 200, headers: headers }
+    );
   } catch (err) {
     console.error(err);
     return NextResponse.json(

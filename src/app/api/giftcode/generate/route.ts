@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import cryptoRandomString from "crypto-random-string";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/db";
 
 export async function POST(req: NextRequest) {
   const { secret } = await req.json();

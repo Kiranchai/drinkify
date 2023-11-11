@@ -1,16 +1,32 @@
-import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/db";
+import getLimiterHeaders from "@/app/utils/getLimiterHeaders";
 
 export async function POST(request: NextRequest) {
   try {
+    const { limiter, headers } = await getLimiterHeaders({
+      request: request,
+      limitPerSecond: 10,
+      duration: 60,
+      endpoint: "verificationEmail",
+    });
+
+    if (!limiter.success) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Zbyt wiele prób. Spróbuj ponownie za chwilę",
+          type: "error",
+        }),
+        { status: 429, headers: headers }
+      );
+    }
+
     const { token } = await request.json();
 
     if (!token) {
       return NextResponse.json(
         { type: "error", message: "an_error_occured" },
-        { status: 404 }
+        { status: 404, headers: headers }
       );
     }
 
@@ -25,7 +41,7 @@ export async function POST(request: NextRequest) {
     if (!tokenFound) {
       return NextResponse.json(
         { type: "error", message: "link_expired_or_not_exists" },
-        { status: 404 }
+        { status: 404, headers: headers }
       );
     }
 
@@ -35,7 +51,7 @@ export async function POST(request: NextRequest) {
           type: "error",
           message: "user_already_verified",
         },
-        { status: 400 }
+        { status: 400, headers: headers }
       );
     }
 
@@ -43,7 +59,7 @@ export async function POST(request: NextRequest) {
     if (date > tokenFound.expireAt) {
       return NextResponse.json(
         { type: "error", message: "link_expired_or_not_exists" },
-        { status: 400 }
+        { status: 400, headers: headers }
       );
     }
 
@@ -55,7 +71,7 @@ export async function POST(request: NextRequest) {
     console.log(`Successfuly verified email: ${updatedUser.email}`);
     return NextResponse.json(
       { type: "success", message: "user_verified_successfuly" },
-      { status: 200 }
+      { status: 200, headers: headers }
     );
   } catch (err) {
     console.log(err);

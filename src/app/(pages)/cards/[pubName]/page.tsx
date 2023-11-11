@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
 import styles from "./page.module.css";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Game from "@/app/components/Game/Game";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/db";
 
 export default async function GameSection({ params }) {
   const { pubName } = params;

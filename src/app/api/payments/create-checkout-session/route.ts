@@ -1,10 +1,9 @@
 import { authOptions } from "@/app/utils/authOptions";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import prisma from "@/app/utils/db";
 
-const prisma = new PrismaClient();
 const stripe = new Stripe(process.env.STRIPE_API_KEY, {
   apiVersion: "2023-10-16",
 });

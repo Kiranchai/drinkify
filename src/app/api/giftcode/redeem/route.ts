@@ -1,18 +1,33 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/utils/authOptions";
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/db";
+import getLimiterHeaders from "@/app/utils/getLimiterHeaders";
 
 export async function POST(req: NextRequest) {
   try {
+    const { limiter, headers } = await getLimiterHeaders({
+      request: req,
+      limitPerSecond: 10,
+      duration: 60,
+      endpoint: "redeem",
+    });
+
+    if (!limiter.success) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Zbyt wiele prób. Spróbuj ponownie za chwilę",
+          type: "error",
+        }),
+        { status: 429, headers: headers }
+      );
+    }
     const session = await getServerSession(authOptions);
 
     if (!session) {
       return NextResponse.json(
         { message: "Musisz być zalogowany", type: "error" },
-        { status: 401 }
+        { status: 401, headers: headers }
       );
     }
 
@@ -21,7 +36,7 @@ export async function POST(req: NextRequest) {
     if (!giftcode) {
       return NextResponse.json(
         { message: "Nie podano kodu", type: "error" },
-        { status: 400 }
+        { status: 400, headers: headers }
       );
     }
 
@@ -34,14 +49,14 @@ export async function POST(req: NextRequest) {
     if (!foundGiftCode) {
       return NextResponse.json(
         { message: "Podany kod jest niepoprawny", type: "error" },
-        { status: 400 }
+        { status: 400, headers: headers }
       );
     }
 
     if (foundGiftCode.redeemed) {
       return NextResponse.json(
         { message: "Podany kod został już wykorzystany", type: "error" },
-        { status: 400 }
+        { status: 400, headers: headers }
       );
     }
 
@@ -65,7 +80,7 @@ export async function POST(req: NextRequest) {
           message: "Już posiadasz produkt przypisany do tego kodu",
           type: "error",
         },
-        { status: 400 }
+        { status: 400, headers: headers }
       );
     }
 
@@ -101,7 +116,7 @@ export async function POST(req: NextRequest) {
         message: "Pomyślnie wykorzystano kod podarunkowy",
         type: "success",
       },
-      { status: 200 }
+      { status: 200, headers: headers }
     );
   } catch (err) {
     return NextResponse.json(

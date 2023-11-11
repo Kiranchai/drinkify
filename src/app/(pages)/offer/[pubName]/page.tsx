@@ -1,11 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import styles from "./page.module.css";
 import gameStyles from "@/app/(pages)/cards/[pubName]/page.module.css";
 import BuyNowButton from "@/app/components/BuyNowButton/BuyNowButton";
 import Image from "next/image";
 import Game from "@/app/components/Game/Game";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/db";
 
 export async function generateStaticParams() {
   const products = await prisma.product.findMany();
