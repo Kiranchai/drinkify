@@ -18,17 +18,6 @@ const transporter = nodemailer.createTransport(
   })
 );
 
-// await new Promise((resolve, reject) => {
-//   transporter.verify(function (error, success) {
-//     if (error) {
-//       console.error(error);
-//       reject(error);
-//     } else {
-//       resolve(success);
-//     }
-//   });
-// });
-
 export async function sendVerificationLink(receiverEmail, token) {
   const mailData = {
     from: "No reply <contact@drinkify.pl>",
