@@ -107,6 +107,21 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    await prisma.invoice.create({
+      data: {
+        amount: 0,
+        wasAGiftCode: true,
+        userId: user.id,
+        products: {
+          connect: [
+            {
+              id: foundGiftCode.productId,
+            },
+          ],
+        },
+      },
+    });
+
     console.log(
       `Redeemed Gift Code: ${giftcode} | Email: ${session.user.email}`
     );

@@ -20,9 +20,11 @@ export async function POST(req: NextRequest) {
           {}
         );
 
+        let amount_total = 0;
         let products = [];
         checkoutLineItems.data.forEach((item) => {
           products.push(item.price.product);
+          amount_total += item.price.unit_amount;
         });
 
         let checkoutCustomer = await stripe.customers.retrieve(data.customer);
@@ -50,6 +52,27 @@ export async function POST(req: NextRequest) {
               });
             })
           );
+
+          const databaseProducts = await prisma.product.findMany({
+            where: {
+              stripeId: {
+                in: products,
+              },
+            },
+          });
+
+          await prisma.invoice.create({
+            data: {
+              userId: databaseUser.id,
+              wasAGiftCode: false,
+              amount: amount_total,
+              products: {
+                connect: databaseProducts.map((product) => ({
+                  id: product.id,
+                })),
+              },
+            },
+          });
 
           console.log(`Checkout completed for ${databaseUser.email}`);
 

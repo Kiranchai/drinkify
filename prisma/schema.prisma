@@ -18,6 +18,7 @@ model User {
   passwordResetToken     PasswordResetToken?
   ownedProducts          Product[]
   giftCodes              GiftCode[]
+  Invoice                Invoice[]
 }
 
 model Product {
@@ -34,6 +35,17 @@ model Product {
   DemoCard    DemoCard[]
   owners      User[]
   GiftCode    GiftCode[]
+  Invoice     Invoice[]
+}
+
+model Invoice {
+  id           String    @id @default(cuid())
+  createdAt    DateTime  @default(now())
+  products     Product[]
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  amount       BigInt
+  wasAGiftCode Boolean
 }
 
 model GiftCode {
