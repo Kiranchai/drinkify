@@ -3,9 +3,9 @@
   --navbar-normal-height: 6rem;
   --section-height: calc(100vh - (var(--navbar-normal-height)));
   --section-normal-height: calc(100vh - (var(--navbar-height)));
-  --bg-main: rgb(45, 20, 44);
-  --bg-secondary: rgb(81, 2, 50);
-  --dark-pink: rgb(105, 54, 89, 0.7);
+  --bg-main: #2d142c;
+  --bg-secondary: #510232;
+  --dark-pink: #693659b3;
   --bg-color: linear-gradient(0deg, #510a32 0%, rgba(45, 20, 44, 1) 50%);
   --inverted-bg-color: linear-gradient(
     0deg,

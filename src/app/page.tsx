@@ -89,11 +89,31 @@ export default function Home() {
       </div>
 
       <section className={styles.about_section}>
-        <article></article>
-        <div>
-          <Image src={cards} alt="alcocards" />
+        <div className={`${styles.product_description}`}>
+          <article className={styles.product_left}>
+            <h2 className={styles.product_header}>Co u nas znajdziesz?</h2>
+            <div className={styles.product_details_wrapper}>
+              <p>
+                <strong style={{ color: "rgb(178 26 172)" }}>Drinkify</strong>{" "}
+                to twój imprezowy przewodnik! Oferujemy ekskluzywne zestawy
+                mobilnych kart imprezowych, które stanowią idealne połączenie
+                śmiechu, pikanterii i dobrej zabawy.
+              </p>
+              <p>
+                Kupując zestaw kart, otrzymujesz dostęp do{" "}
+                <strong>interaktywnej gry karcianej</strong> z wybranej
+                tematyki, po czym możesz grać na komputerze, tablecie i
+                telefonie!
+              </p>
+              <Link className={styles.see_more_btn} href={"/offer"}>
+                Zobacz naszą ofertę
+              </Link>
+            </div>
+          </article>
+          <div className={styles.description_img_wrapper}>
+            <Image src={cards} alt="alcocards" />
+          </div>
         </div>
-
         <h2 className={styles.about_header}>Dlaczego Drinkify?</h2>
         <div className={styles.about_advantage_container}>
           <AdvantageContainer
