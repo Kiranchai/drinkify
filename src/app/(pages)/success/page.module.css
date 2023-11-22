@@ -1,0 +1,83 @@
+.success_page {
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* padding-top: 2rem; */
+  padding-inline: 1rem;
+}
+
+.success_page > svg {
+  font-size: clamp(3.5rem, 5vw, 5rem);
+  fill: #de1aff;
+}
+
+.success_header {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 600;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.subheader {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  text-align: center;
+  color: #acacac;
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.continueButton {
+  margin-top: 1rem;
+  background-color: #580068;
+  padding: 0.75rem 0.75rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+.continueButton:hover {
+  background-color: #773a81;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.buttonGhost {
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid #7d0094;
+}
+
+.buttonGhost:hover {
+  background-color: #7d0094;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.hf_message {
+  margin-top: 3rem;
+  font-size: clamp(1.3rem, 3vw, 1.5rem);
+  font-weight: 600;
+  text-align: center;
+}
+
+.logoWrapper {
+  margin-top: 5rem;
+  max-width: 15rem;
+}
+
+.logoWrapper > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media only screen and (max-width: 350px) {
+  .buttonsWrapper {
+    flex-direction: column;
+    gap: 0;
+  }
+}
