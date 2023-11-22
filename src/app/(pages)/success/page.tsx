@@ -13,5 +13,5 @@ export default function Success() {
     router.replace("/cards");
   }, []);
 
-  return;
+  return <div>Sukces</div>;
 }

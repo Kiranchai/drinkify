@@ -1,8 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import { PrismaClient } from "@prisma/client";
 import styles from "./page.module.css";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oferta | Drinkify",
+};
 
 export default async function Offer() {
   const res = await fetch(

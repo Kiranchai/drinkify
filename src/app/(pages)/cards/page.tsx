@@ -5,6 +5,11 @@ import { redirect } from "next/navigation";
 import React from "react";
 import styles from "./page.module.css";
 import prisma from "@/app/utils/db";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Moje karty | Drinkify",
+};
 
 export default async function MyCards() {
   const session = await getServerSession();

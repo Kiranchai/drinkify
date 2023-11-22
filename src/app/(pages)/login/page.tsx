@@ -2,6 +2,11 @@ import styles from "./page.module.css";
 import { LoginForm } from "../../components/LoginForm/LoginForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Logowanie | Drinkify",
+};
 
 const Login = async () => {
   const session = await getServerSession();

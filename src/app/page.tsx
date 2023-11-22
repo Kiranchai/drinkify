@@ -16,7 +16,6 @@ import partyImage3 from "public/party_3.jpg";
 import cards from "public/cards.webp";
 
 export const dynamic = "force-dynamic";
-
 export default function Home() {
   return (
     <main className={styles.home_section}>

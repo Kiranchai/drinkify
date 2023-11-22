@@ -3,6 +3,11 @@ import Link from "next/link";
 import styles from "../login/page.module.css";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Rejestracja | Drinkify",
+};
 
 const Register = async () => {
   const session = await getServerSession();

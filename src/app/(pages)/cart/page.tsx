@@ -1,6 +1,11 @@
 import CartComponent from "@/app/components/CartComponent/CartComponent";
 import React from "react";
 import styles from "./page.module.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Koszyk | Drinkify",
+};
 
 export default function Cart() {
   return (

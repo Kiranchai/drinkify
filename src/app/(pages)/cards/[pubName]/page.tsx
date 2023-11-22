@@ -14,7 +14,13 @@ export default async function GameSection({ params }) {
 
   const product = await prisma.product.findUnique({
     where: { pubName: pubName },
-    select: { owners: true, cards: true, thumbnail: true, gameType: true },
+    select: {
+      owners: true,
+      cards: true,
+      thumbnail: true,
+      gameType: true,
+      name: true,
+    },
   });
 
   const owners = product.owners.map((el) => {

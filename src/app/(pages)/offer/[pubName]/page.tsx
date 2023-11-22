@@ -4,6 +4,29 @@ import BuyNowButton from "@/app/components/BuyNowButton/BuyNowButton";
 import Image from "next/image";
 import Game from "@/app/components/Game/Game";
 import prisma from "@/app/utils/db";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { pubName } = params;
+  const product = await prisma.product.findUnique({
+    where: {
+      pubName: pubName,
+    },
+    include: {
+      owners: {
+        select: {
+          email: true,
+        },
+      },
+      DemoCard: {},
+    },
+  });
+
+  return {
+    title: `${product.name} | Drinkify`,
+    description: product.description.split("<br>")[0],
+  };
+}
 
 export async function generateStaticParams() {
   const products = await prisma.product.findMany();

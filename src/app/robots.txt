@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /cards/
+Disallow: /resetPassword/
+Disallow: /verification/
+Disallow: /success/
+Sitemap: https://alcocards-next-production.up.railway.app/sitemap.xml
