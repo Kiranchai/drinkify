@@ -14,6 +14,11 @@ import partyImage from "public/party_1.jpg";
 import partyImage2 from "public/party_2.jpg";
 import partyImage3 from "public/party_3.jpg";
 import cards from "public/cards.webp";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Strona główna | Drinkify",
+};
 
 export const dynamic = "force-dynamic";
 export default function Home() {
