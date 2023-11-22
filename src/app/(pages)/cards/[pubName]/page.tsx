@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Game from "@/app/components/Game/Game";
 import prisma from "@/app/utils/db";
+import NotFound from "@/app/not-found";
 
 export default async function GameSection({ params }) {
   const { pubName } = params;
@@ -22,6 +23,10 @@ export default async function GameSection({ params }) {
       name: true,
     },
   });
+
+  if (!product) {
+    return NotFound();
+  }
 
   const owners = product.owners.map((el) => {
     return el.email;

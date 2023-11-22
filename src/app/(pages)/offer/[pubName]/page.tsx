@@ -5,6 +5,7 @@ import Image from "next/image";
 import Game from "@/app/components/Game/Game";
 import prisma from "@/app/utils/db";
 import type { Metadata } from "next";
+import NotFound from "@/app/not-found";
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { pubName } = params;
@@ -21,11 +22,12 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       DemoCard: {},
     },
   });
-
-  return {
-    title: `${product.name} | Drinkify`,
-    description: product.description.split("<br>")[0],
-  };
+  if (product) {
+    return {
+      title: `${product.name} | Drinkify`,
+      description: product.description.split("<br>")[0],
+    };
+  }
 }
 
 export async function generateStaticParams() {
@@ -53,6 +55,10 @@ export default async function Product({ params }) {
       DemoCard: {},
     },
   });
+
+  if (!product) {
+    return NotFound();
+  }
 
   return (
     <>
