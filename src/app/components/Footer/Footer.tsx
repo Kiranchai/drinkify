@@ -12,14 +12,14 @@ const Footer = () => {
         </header>
 
         <div className={styles.footer_links_col}>
-          <h4 className={styles.footer_links_header}>Rozrywka</h4>
+          <header className={styles.footer_links_header}>Rozrywka</header>
           <div className={styles.footer_links_list}>
             <Link href={"/offer"}>Oferta</Link>
             <Link href={"/cards"}>Moje karty</Link>
           </div>
         </div>
         <div className={styles.footer_links_col}>
-          <h4 className={styles.footer_links_header}>Strony</h4>
+          <header className={styles.footer_links_header}>Strony</header>
           <div className={styles.footer_links_list}>
             <Link href={"/"}>Regulamin</Link>
             <Link href={"/"}>Polityka prywatności</Link>

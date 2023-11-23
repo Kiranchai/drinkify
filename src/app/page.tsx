@@ -98,7 +98,7 @@ export default function Home() {
             <h2 className={styles.product_header}>Co u nas znajdziesz?</h2>
             <div className={styles.product_details_wrapper}>
               <p>
-                <strong style={{ color: "rgb(178 26 172)" }}>Drinkify</strong>{" "}
+                <strong style={{ color: "rgb(217 32 210)" }}>Drinkify</strong>{" "}
                 to twój imprezowy przewodnik! Oferujemy ekskluzywne zestawy
                 mobilnych kart imprezowych, które stanowią idealne połączenie
                 śmiechu, pikanterii i dobrej zabawy.
