@@ -64,6 +64,9 @@ export default function Home() {
               alt="phone mockup"
               loading="eager"
               priority
+              sizes="(min-width: 60em) 20vw,
+                    (min-width: 28em) 30vw,
+                    50vw"
             />
           </div>
         </div>
@@ -167,13 +170,21 @@ export default function Home() {
               src={partyImage}
               className={styles.benefits_img}
               alt="people partying"
+              priority={false}
+              sizes="(min-width: 60em) 24vw,
+                    (min-width: 28em) 45vw,
+                    100vw"
             />
           </div>
           <div className={`${styles.benefits_col} ${styles.mid}`}>
             <Image
               src={partyImage2}
               className={styles.benefits_img}
-              alt="people drinking "
+              alt="people drinking"
+              priority={false}
+              sizes="(min-width: 60em) 24vw,
+                    (min-width: 28em) 45vw,
+                    100vw"
             />
             <div className={styles.benefits_header_wrapper}>
               <div className={styles.benefits_icon_wrapper}>
@@ -199,6 +210,10 @@ export default function Home() {
               src={partyImage3}
               className={styles.benefits_img}
               alt="campfire party"
+              priority={false}
+              sizes="(min-width: 60em) 24vw,
+                    (min-width: 28em) 45vw,
+                    100vw"
             />
           </div>
         </div>
