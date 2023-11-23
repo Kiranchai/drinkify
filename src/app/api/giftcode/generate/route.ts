@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/utils/db";
 
 export async function POST(req: NextRequest) {
-  const { secret } = await req.json();
+  const { secret, productId } = await req.json();
 
-  if (secret !== "123") {
+  if (secret !== process.env.GIFTCODE_SECRET) {
     return NextResponse.json({}, { status: 401 });
   }
 
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const giftcode = await prisma.giftCode.create({
       data: {
         code: cryptoRandomString({ length: 12 }).toUpperCase(),
-        productId: "clo0jcgpc0000ka6smvwm05nu",
+        productId: productId,
       },
     });
 
