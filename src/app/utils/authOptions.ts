@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
             requestIp,
             10,
             60,
-            "/login"
+            "login"
           );
 
           if (!result.success) {
