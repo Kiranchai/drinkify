@@ -1,6 +1,6 @@
 import prisma from "@/app/utils/db";
 
-const URL = "https://alcocards-next-production.up.railway.app";
+const URL = "https://drinkify.pl";
 
 export default async function sitemap() {
   const products = await prisma.product.findMany({

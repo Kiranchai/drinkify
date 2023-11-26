@@ -18,6 +18,9 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Strona główna | Drinkify",
+  alternates: {
+    canonical: "https://drinkify.pl",
+  },
 };
 
 export const dynamic = "force-dynamic";
@@ -171,8 +174,8 @@ export default function Home() {
               className={styles.benefits_img}
               alt="people partying"
               priority={false}
-              sizes="(min-width: 60em) 24vw,
-                    (min-width: 28em) 45vw,
+              sizes="(min-width: 60em) 50vw,
+              (min-width: 28em) 70vw,
                     100vw"
             />
           </div>
@@ -182,8 +185,8 @@ export default function Home() {
               className={styles.benefits_img}
               alt="people drinking"
               priority={false}
-              sizes="(min-width: 60em) 24vw,
-                    (min-width: 28em) 45vw,
+              sizes="(min-width: 60em) 50vw,
+              (min-width: 28em) 70vw,
                     100vw"
             />
             <div className={styles.benefits_header_wrapper}>
@@ -211,8 +214,8 @@ export default function Home() {
               className={styles.benefits_img}
               alt="campfire party"
               priority={false}
-              sizes="(min-width: 60em) 24vw,
-                    (min-width: 28em) 45vw,
+              sizes="(min-width: 60em) 50vw,
+                    (min-width: 28em) 70vw,
                     100vw"
             />
           </div>
