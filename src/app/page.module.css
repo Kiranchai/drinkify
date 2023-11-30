@@ -244,6 +244,14 @@
   filter: brightness(75%) saturate(120%);
 }
 
+.welcome_header_highlight {
+  color: #8b0000;
+}
+
+.details_hightlight {
+  color: rgb(217 32 210);
+}
+
 .custom_shape_divider_top_1679344967 {
   position: absolute;
   top: 0;

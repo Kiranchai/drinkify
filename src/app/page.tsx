@@ -18,9 +18,6 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Strona główna | Drinkify",
-  alternates: {
-    canonical: "https://drinkify.pl",
-  },
 };
 
 export const dynamic = "force-dynamic";
@@ -54,7 +51,7 @@ export default function Home() {
           <div className={styles.welcome_container_grid_item}>
             <h1 className={styles.welcome_header}>
               Przenieś swoje imprezy na{" "}
-              <b style={{ color: "#8b0000" }}>wyższy</b> poziom
+              <b className={styles.welcome_header_highlight}>wyższy</b> poziom
             </h1>
             <Link className={styles.welcome_btn} href={"/offer"}>
               Zobacz naszą ofertę
@@ -104,7 +101,7 @@ export default function Home() {
             <h2 className={styles.product_header}>Co u nas znajdziesz?</h2>
             <div className={styles.product_details_wrapper}>
               <p>
-                <strong style={{ color: "rgb(217 32 210)" }}>Drinkify</strong>{" "}
+                <strong className={styles.details_hightlight}>Drinkify</strong>{" "}
                 to twój imprezowy przewodnik! Oferujemy ekskluzywne zestawy
                 mobilnych kart imprezowych, które stanowią idealne połączenie
                 śmiechu, pikanterii i dobrej zabawy.
@@ -237,7 +234,7 @@ const AdvantageContainer = ({
   return (
     <div className={styles.advantage_item}>
       <div className={styles.advantage_item_icon}>{icon}</div>
-      <h2 className={styles.advantage_item_title}>{title}</h2>
+      <h3 className={styles.advantage_item_title}>{title}</h3>
       <span className={styles.advantage_item_subtitle}>{subtitle}</span>
     </div>
   );

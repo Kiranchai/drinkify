@@ -60,9 +60,50 @@ export default async function Product({ params }) {
     return NotFound();
   }
 
+  const priceValidUntil = new Date();
+  priceValidUntil.setDate(priceValidUntil.getDate() + 30);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.thumbnail,
+    description: product.description,
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      price: product.price,
+      priceCurrency: "PLN",
+      priceValidUntil: priceValidUntil.toISOString().split("T")[0],
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: "0",
+          currency: "PLN",
+        },
+        shippingDestination: [
+          {
+            "@type": "DefinedRegion",
+            addressCountry: "*",
+            addressRegion: ["*"],
+          },
+        ],
+      },
+    },
+    brand: {
+      "@type": "Brand",
+      name: "Drinkify",
+    },
+  };
+
   return (
     <>
       <section className={styles.product_section}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <div
           style={{
             background: "var(--bg-color)",
@@ -132,7 +173,7 @@ export default async function Product({ params }) {
           <Game
             cards={product.DemoCard}
             isDemo={true}
-            cardImage={product.thumbnail}
+            cardImage={product.backgroundImg}
             gameType={product.gameType}
           />
         </div>
