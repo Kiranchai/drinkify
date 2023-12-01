@@ -6,6 +6,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Oferta | Drinkify",
+  alternates: {
+    canonical: "https://drinkify.pl/offer",
+  },
 };
 
 export default async function Offer() {

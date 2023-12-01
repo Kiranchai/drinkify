@@ -35,8 +35,9 @@ export const metadata: Metadata = {
     locale: "pl_pl",
   },
   alternates: {
-    canonical: "https://drinkify.pl/",
+    canonical: "https://drinkify.pl",
   },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT),
 };
 
 export default async function RootLayout({

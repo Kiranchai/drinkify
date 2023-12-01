@@ -26,6 +26,9 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     return {
       title: `${product.name} | Drinkify`,
       description: product.description.split("<br>")[0],
+      alternates: {
+        canonical: `https://drinkify.pl/offer/${product.pubName}`,
+      },
     };
   }
 }

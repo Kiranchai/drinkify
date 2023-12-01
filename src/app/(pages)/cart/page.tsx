@@ -5,6 +5,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Koszyk | Drinkify",
+  alternates: {
+    canonical: "https://drinkify.pl/cart",
+  },
 };
 
 export default function Cart() {

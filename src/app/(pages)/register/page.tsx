@@ -7,6 +7,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Rejestracja | Drinkify",
+  alternates: {
+    canonical: `https://drinkify.pl/register`,
+  },
 };
 
 const Register = async () => {

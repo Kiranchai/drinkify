@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import { MdOutlineMail } from "react-icons/md";
 import { FaInstagram, FaTiktok, FaFacebookF } from "react-icons/fa";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 const contactItems = [
   {
@@ -25,6 +26,13 @@ const contactItems = [
     link: "https://tiktok.com/@drinkifypolska",
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Kontakt | Drinkify",
+  alternates: {
+    canonical: "https://drinkify.pl/contact",
+  },
+};
 
 export default function page() {
   return (
