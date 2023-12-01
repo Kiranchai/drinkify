@@ -22,7 +22,7 @@ const Footer = () => {
           <header className={styles.footer_links_header}>Strony</header>
           <div className={styles.footer_links_list}>
             <Link href={"/"}>Regulamin</Link>
-            <Link href={"/"}>Polityka prywatności</Link>
+            <Link href={"/privacy-policy"}>Polityka prywatności</Link>
             <Link href={"/contact"}>Kontakt</Link>
           </div>
         </div>

@@ -1,0 +1,45 @@
+.privacy_section {
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.privacy_header {
+  font-size: 1.6rem;
+}
+
+.inner_container {
+  padding: 1rem;
+  max-width: 70rem;
+  padding-bottom: 3rem;
+}
+
+.inner_container > p {
+  margin-top: 1rem;
+}
+
+.inner_container > h2 {
+  font-weight: 600;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.inner_container > ul {
+  list-style: initial;
+  margin-left: 1rem;
+}
+
+.inner_container > ul > li > ul {
+  list-style: initial;
+  margin-left: 2rem;
+}
+
+.inner_container > ul > li > ul > li > ul {
+  list-style: initial;
+  margin-left: 3rem;
+}
+
+.inner_container > ul > li > ul > li > ul > li {
+  padding: 0.25rem;
+}
