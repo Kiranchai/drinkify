@@ -21,6 +21,7 @@ export default async function GameSection({ params }) {
       thumbnail: true,
       gameType: true,
       name: true,
+      backgroundImg: true,
     },
   });
 
@@ -45,7 +46,7 @@ export default async function GameSection({ params }) {
       <div className={`mh ${styles.game_section}`}>
         <Game
           cards={product.cards}
-          cardImage={product.thumbnail}
+          cardImage={product.backgroundImg}
           gameType={product.gameType}
           isDemo={false}
         />

@@ -30,13 +30,13 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   }
 }
 
-export async function generateStaticParams() {
-  const products = await prisma.product.findMany();
+// export async function generateStaticParams() {
+//   const products = await prisma.product.findMany();
 
-  return products.map((product) => {
-    pubName: product.pubName;
-  });
-}
+//   return products.map((product) => {
+//     pubName: product.pubName;
+//   });
+// }
 
 export const dynamic = "force-dynamic";
 

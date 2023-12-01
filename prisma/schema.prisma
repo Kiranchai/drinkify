@@ -22,20 +22,21 @@ model User {
 }
 
 model Product {
-  id          String     @id @default(cuid())
-  createdAt   DateTime   @default(now())
-  name        String
-  stripeId    String     @unique
-  price       String
-  description String
-  pubName     String     @unique
-  thumbnail   String
-  gameType    String
-  cards       Card[]
-  DemoCard    DemoCard[]
-  owners      User[]
-  GiftCode    GiftCode[]
-  Invoice     Invoice[]
+  id            String     @id @default(cuid())
+  createdAt     DateTime   @default(now())
+  name          String
+  stripeId      String     @unique
+  price         String
+  description   String
+  pubName       String     @unique
+  thumbnail     String
+  backgroundImg String?
+  gameType      String
+  cards         Card[]
+  DemoCard      DemoCard[]
+  owners        User[]
+  GiftCode      GiftCode[]
+  Invoice       Invoice[]
 }
 
 model Invoice {
