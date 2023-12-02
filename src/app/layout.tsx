@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./utils/authOptions";
-import ogImage from "public/ogimage.png";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
