@@ -109,9 +109,9 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
         return (
           <>
             <div className={styles.gamecard_container}>
-              <h3 className={styles.gamecard_title}>{card.title}</h3>
+              <h3 className={styles.gamecard_title}>{card?.title}</h3>
               <h4 className={styles.gamecard_description}>
-                {card.description}
+                {card?.description}
               </h4>
             </div>
             <div
@@ -124,17 +124,19 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
                 filter: "opacity(.2)",
               }}
             >
-              <Image
-                src={cardImage}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-                height={150}
-                width={250}
-                alt="drink"
-              />
+              {cardImage && (
+                <Image
+                  src={cardImage}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
+                  height={150}
+                  width={250}
+                  alt="drink"
+                />
+              )}
             </div>
           </>
         );

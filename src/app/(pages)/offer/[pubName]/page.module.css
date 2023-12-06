@@ -45,7 +45,7 @@
 
 .product_description {
   font-weight: 200;
-  color: rgb(180, 180, 180);
+  color: rgb(214, 214, 214);
   padding: 0.75rem 0;
 }
 
@@ -89,6 +89,59 @@
 
 .custom_shape_divider_bottom_1681672643 .shape_fill {
   fill: #1e0324;
+}
+
+.rules_container {
+  background-color: #1e0324;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rules_inner {
+  max-width: 70rem;
+  padding: 2rem;
+}
+
+.rules_inner > h2 {
+  font-size: 2rem;
+  /* text-align: center; */
+  margin-bottom: 1.5rem;
+}
+
+.rules_inner > p {
+  position: relative;
+  margin-bottom: 1rem;
+  padding-bottom: 2rem;
+  /* border-bottom: 1px solid rgb(58, 58, 58); */
+}
+
+.rules_inner > p::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #570332;
+  height: 1px;
+  width: 50%;
+}
+
+.rules_inner > header {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.rules_inner > ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.rules_inner > ol {
+  padding-left: 1rem;
+  list-style: decimal;
 }
 
 @media only screen and (max-width: 600px) {

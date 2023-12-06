@@ -1,11 +1,11 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model User {
@@ -15,10 +15,10 @@ model User {
   emailVerified          Boolean                 @default(false)
   password               String
   emailVerificationToken EmailVerificationToken?
-  passwordResetToken     PasswordResetToken?
-  ownedProducts          Product[]
   giftCodes              GiftCode[]
   Invoice                Invoice[]
+  passwordResetToken     PasswordResetToken?
+  ownedProducts          Product[]               @relation("ProductToUser")
 }
 
 model Product {
@@ -30,23 +30,24 @@ model Product {
   description   String
   pubName       String     @unique
   thumbnail     String
-  backgroundImg String?
   gameType      String
+  backgroundImg String?
+  rules         String?
   cards         Card[]
   DemoCard      DemoCard[]
-  owners        User[]
   GiftCode      GiftCode[]
-  Invoice       Invoice[]
+  Invoice       Invoice[]  @relation("InvoiceToProduct")
+  owners        User[]     @relation("ProductToUser")
 }
 
 model Invoice {
   id           String    @id @default(cuid())
   createdAt    DateTime  @default(now())
-  products     Product[]
   userId       String
-  user         User      @relation(fields: [userId], references: [id])
   amount       BigInt
   wasAGiftCode Boolean
+  user         User      @relation(fields: [userId], references: [id])
+  products     Product[] @relation("InvoiceToProduct")
 }
 
 model GiftCode {
@@ -54,23 +55,23 @@ model GiftCode {
   createdAt DateTime @default(now())
   code      String   @unique
   productId String
-  Product   Product? @relation(fields: [productId], references: [id])
-  User      User?    @relation(fields: [userId], references: [id])
   userId    String?
   redeemed  Boolean  @default(false)
+  Product   Product  @relation(fields: [productId], references: [id])
+  User      User?    @relation(fields: [userId], references: [id])
 }
 
 model EmailVerificationToken {
   userId   String   @unique
   hash     String   @unique
-  expireAt DateTime @default(dbgenerated("now() + interval '30 minutes'"))
+  expireAt DateTime @default(dbgenerated("(now() + '00:30:00'::interval)"))
   user     User     @relation(fields: [userId], references: [id])
 }
 
 model PasswordResetToken {
   userId   String   @unique
   hash     String   @unique
-  expireAt DateTime @default(dbgenerated("now() + interval '30 minutes'"))
+  expireAt DateTime @default(dbgenerated("(now() + '00:30:00'::interval)"))
   user     User     @relation(fields: [userId], references: [id])
 }
 
@@ -81,9 +82,9 @@ model Card {
   description    String
   productId      String
   forbiddenWords String[]
-  truth          String?
   dare           String?
-  Product        Product? @relation(fields: [productId], references: [id])
+  truth          String?
+  Product        Product  @relation(fields: [productId], references: [id])
 }
 
 model DemoCard {
@@ -93,7 +94,7 @@ model DemoCard {
   description    String
   productId      String
   forbiddenWords String[]
-  truth          String?
   dare           String?
-  Product        Product? @relation(fields: [productId], references: [id])
+  truth          String?
+  Product        Product  @relation(fields: [productId], references: [id])
 }

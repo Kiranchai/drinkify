@@ -72,17 +72,19 @@ const TBCard = ({
             filter: "opacity(.2)",
           }}
         >
-          <Image
-            src={image}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-            }}
-            alt="drink"
-            width={700}
-            height={700}
-          />
+          {image && (
+            <Image
+              src={image}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+              }}
+              alt="drink"
+              width={700}
+              height={700}
+            />
+          )}
         </div>
       </div>
     </>

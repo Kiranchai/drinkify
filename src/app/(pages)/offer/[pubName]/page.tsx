@@ -121,20 +121,22 @@ export default async function Product({ params }) {
             <div
               className={`${styles.product_grid_item} ${styles.img_wrapper}`}
             >
-              <Image
-                src={product.thumbnail}
-                alt="drink"
-                width={300}
-                height={200}
-                priority
-              />
+              {product.thumbnail && (
+                <Image
+                  src={product.thumbnail}
+                  alt="drink"
+                  width={300}
+                  height={200}
+                  priority
+                />
+              )}
             </div>
             <div className={`${styles.product_grid_item} ${styles.details}`}>
-              <h1 className={styles.product_title}>{product.name}</h1>
-              <span className={styles.product_price}>{product.price} zł</span>
+              <h1 className={styles.product_title}>{product?.name}</h1>
+              <span className={styles.product_price}>{product?.price} zł</span>
               <p
                 className={styles.product_description}
-                dangerouslySetInnerHTML={{ __html: product.description }}
+                dangerouslySetInnerHTML={{ __html: product?.description }}
               ></p>
 
               <BuyNowButton product={product} />
@@ -180,6 +182,14 @@ export default async function Product({ params }) {
             gameType={product.gameType}
           />
         </div>
+        {product?.rules && (
+          <section className={styles.rules_container}>
+            <div
+              className={styles.rules_inner}
+              dangerouslySetInnerHTML={{ __html: product.rules }}
+            ></div>
+          </section>
+        )}
       </section>
     </>
   );
