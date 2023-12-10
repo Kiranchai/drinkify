@@ -68,7 +68,7 @@ export const authOptions: NextAuthOptions = {
             return { error: "Twój email jest niezweryfikowany!" };
           }
 
-          // console.log(user);
+          console.log(`Logged in user: ${user.email}`);
           return user;
         } catch (err) {
           console.error(err);
