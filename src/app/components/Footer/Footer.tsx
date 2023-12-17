@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.footer_inner}>
         <header className={styles.footer_logo}>
-          <Image alt="drinkify logo" src={logo} width={400} height={600} />
+          <Image alt="drinkify logo" src={logo} height={250} width={250} />
         </header>
 
         <div className={styles.footer_links_col}>

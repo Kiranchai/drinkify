@@ -1,7 +1,27 @@
+import nextMDX from "@next/mdx";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+
+const withMDX = nextMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [
+      remarkFrontmatter,
+      [remarkMdxFrontmatter, { name: "matter" }],
+    ],
+    rehypePlugins: [],
+  },
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com"],
+    domains: [
+      "res.cloudinary.com",
+      "api.backlinko.com",
+      "scastiel.dev",
+      "images.pexels.com",
+    ],
   },
   async headers() {
     return [
@@ -40,4 +60,4 @@ const nextConfig = {
   experimental: { optimizeCss: true },
 };
 
-module.exports = nextConfig;
+export default withMDX(nextConfig);

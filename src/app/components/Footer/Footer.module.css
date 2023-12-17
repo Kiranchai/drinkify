@@ -17,9 +17,12 @@
 }
 
 .footer_logo {
+  width: 100%;
   font-size: 3rem;
   font-weight: 700;
   padding: 2rem;
+  position: relative;
+  aspect-ratio: 1;
 }
 
 .footer_logo > img {

@@ -15,13 +15,16 @@ import partyImage2 from "public/party_2.jpg";
 import partyImage3 from "public/party_3.jpg";
 import cards from "public/cards.webp";
 import { Metadata } from "next";
+import { getPostData } from "./utils/posts";
 
 export const metadata: Metadata = {
-  title: "Strona główna | Drinkify",
+  title: "Drinkify - gry imprezowe zawsze na wyciągnięcie ręki",
 };
 
 export const dynamic = "force-dynamic";
-export default function Home() {
+export default async function Home() {
+  const post = await getPostData("5-najlepszych-gier-imprezowych");
+
   return (
     <main className={styles.home_section}>
       <div className={styles.welcome}>
@@ -171,9 +174,7 @@ export default function Home() {
               className={styles.benefits_img}
               alt="people partying"
               priority={false}
-              sizes="(min-width: 60em) 50vw,
-              (min-width: 28em) 70vw,
-                    100vw"
+              sizes="(max-width: 800px) 100vw, (max-width:1520px) 33vw, 600px"
             />
           </div>
           <div className={`${styles.benefits_col} ${styles.mid}`}>
@@ -182,9 +183,7 @@ export default function Home() {
               className={styles.benefits_img}
               alt="people drinking"
               priority={false}
-              sizes="(min-width: 60em) 50vw,
-              (min-width: 28em) 70vw,
-                    100vw"
+              sizes="(max-width: 800px) 100vw, (max-width:1520px) 33vw, 600px"
             />
             <div className={styles.benefits_header_wrapper}>
               <div className={styles.benefits_icon_wrapper}>
@@ -211,11 +210,41 @@ export default function Home() {
               className={styles.benefits_img}
               alt="campfire party"
               priority={false}
-              sizes="(min-width: 60em) 50vw,
-                    (min-width: 28em) 70vw,
-                    100vw"
+              sizes="(max-width: 800px) 100vw, (max-width:1520px) 33vw, 600px"
             />
           </div>
+        </div>
+      </section>
+      <section className="flex flex-col items-center p-10 bg-[#1e0324]">
+        <h2 className="text-5xl font-semibold mb-16 mt-4 text-center">
+          Nasz blog!
+        </h2>
+        <div className="flex gap-4">
+          <article className="aspect-square max-w-xs bg-fuchsia-950 rounded-md shadow-md shadow-gray-800">
+            <div className="relative aspect-video overflow-hidden">
+              <Image
+                src={post.metadata.thumbnail}
+                alt={post.metadata.thumbnailAlt}
+                fill
+                className="object-cover rounded-t-md overflow-hidden"
+              />
+            </div>
+            <div className="p-4 flex flex-col gap-1 ">
+              <span className="text-sm opacity-80">
+                {post.metadata.createdAt}
+              </span>
+              <header className=" font-bold text-xl mb-2">
+                {post.metadata.title}
+              </header>
+              <p className="text-sm opacity-80">{post.metadata.description}</p>
+              <Link
+                href={post.metadata.url}
+                className="mt-4 bg-fuchsia-900 max-w-fit px-4 py-2 rounded-md"
+              >
+                Czytaj dalej
+              </Link>
+            </div>
+          </article>
         </div>
       </section>
     </main>

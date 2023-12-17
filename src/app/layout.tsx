@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./utils/authOptions";
+import Scroll from "./components/Scroll";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -49,6 +50,7 @@ export default async function RootLayout({
   return (
     <html lang="pl">
       <body className={poppins.className}>
+        <Scroll />
         <Provider session={session}>
           <Navbar />
           {children}
