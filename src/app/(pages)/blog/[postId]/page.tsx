@@ -25,6 +25,9 @@ export async function generateMetadata({ params }): Promise<Metadata> {
         description: post.metadata.description,
         url: post.metadata.url,
       },
+      alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT}${post.metadata.url}`,
+      },
     };
   } catch (err) {
     return {};
