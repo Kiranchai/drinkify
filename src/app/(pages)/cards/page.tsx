@@ -28,6 +28,7 @@ export default async function MyCards() {
           pubName: true,
           thumbnail: true,
           name: true,
+          backgroundImg: true,
         },
       },
     },
@@ -63,13 +64,15 @@ export default async function MyCards() {
                       key={card.pubName as React.Key}
                     >
                       <div className={styles.mycards_img_wrapper}>
-                        <Image
-                          src={card.thumbnail}
-                          alt="drink"
-                          width={300}
-                          height={300}
-                          loading={idx === 0 ? "eager" : "lazy"}
-                        />
+                        {card.backgroundImg && (
+                          <Image
+                            src={card.backgroundImg}
+                            alt="drink"
+                            fill
+                            sizes="(max-width:320px) 100vw, 600px"
+                            loading={idx === 0 ? "eager" : "lazy"}
+                          />
+                        )}
                       </div>
 
                       <span className={styles.mycards_card_span}>

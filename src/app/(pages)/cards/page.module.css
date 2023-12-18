@@ -88,6 +88,7 @@
 }
 
 .mycards_img_wrapper {
+  position: relative;
   height: 85%;
 }
 

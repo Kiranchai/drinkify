@@ -13,19 +13,16 @@
 .offer_header {
   font-size: 3rem;
   text-shadow: 3px 3px 4px black;
-  margin-bottom: 2rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
 }
 
 .offer_products {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  /* display: flex;
-    justify-items: center; */
-  /* align-items: center; */
-  /* flex-wrap: wrap; */
   max-width: 50rem;
-  gap: 3rem;
+  gap: 5rem;
 }
 .offer_single_product {
   width: 100%;
@@ -37,13 +34,16 @@
 
 .offer_image_wrapper {
   width: 100%;
-  background: radial-gradient(circle, rgb(43, 5, 36) 0%, rgb(0, 0, 0) 90%);
+  /* background: radial-gradient(circle, rgb(43, 5, 36) 0%, rgb(0, 0, 0) 90%); */
   display: flex;
   justify-content: center;
   align-items: center;
-  -webkit-box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1);
+  filter: drop-shadow(0px 5px 10px rgb(71, 33, 69));
+  position: relative;
+  aspect-ratio: 1;
+  /* -webkit-box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1);
   -moz-box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1);
-  box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1);
+  box-shadow: 3px 8px 14px 0px rgba(20, 19, 20, 1); */
 }
 
 .offer_image_wrapper > img {
@@ -70,16 +70,19 @@
   display: flex;
   justify-content: space-between;
   text-shadow: 2px 2px 2px black;
+  padding-inline: 2rem;
+  gap: 0.5rem;
 }
 
 .offer_bestseller_flag {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 10;
   font-size: 0.75rem;
   background-color: rgb(183, 0, 0);
   padding: 0.25rem;
-  transform: translate(5%, -30%) rotate(25deg);
+  transform: translate(-25%, -30%) rotate(25deg);
   aspect-ratio: 1;
   display: flex;
   justify-content: center;
@@ -90,10 +93,7 @@
 @media only screen and (max-width: 600px) {
   .offer_products {
     grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .offer_products {
-    margin-bottom: 5rem;
+    gap: 6rem;
+    /* margin-bottom: 8rem; */
   }
 }

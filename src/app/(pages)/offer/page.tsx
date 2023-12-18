@@ -45,8 +45,8 @@ export default async function Offer() {
                     <Image
                       src={product.thumbnail}
                       alt="drink"
-                      width={300}
-                      height={220}
+                      fill
+                      sizes="(max-width:360px) 100vw, 600px"
                       loading={idx === 0 ? "eager" : "lazy"}
                     />
                   </div>

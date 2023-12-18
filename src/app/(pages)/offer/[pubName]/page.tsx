@@ -121,12 +121,12 @@ export default async function Product({ params }) {
             <div
               className={`${styles.product_grid_item} ${styles.img_wrapper}`}
             >
-              {product.thumbnail && (
+              {product.backgroundImg && (
                 <Image
-                  src={product.thumbnail}
+                  src={product.backgroundImg}
                   alt="drink"
-                  width={300}
-                  height={200}
+                  fill
+                  sizes="(max-width:440px) 100vw, 600px"
                   priority
                 />
               )}
