@@ -1,67 +1,52 @@
 "use client";
-import { setCookie, getCookie } from "cookies-next";
-import { useState, useEffect } from "react";
+
 import styles from "./CookiesConsent.module.css";
-import { usePathname } from "next/navigation";
+import { getLocalStorage, setLocalStorage } from "@/app/utils/storageHelper";
+import { useState, useEffect } from "react";
 
 export default function CookiesConsent() {
-  const [consent, setConsent] = useState(null);
-  const pathname = usePathname();
+  const [cookieConsent, setCookieConsent] = useState(false);
 
   useEffect(() => {
-    setConsent(getCookie("consent"));
-  }, [consent, pathname]);
+    const storedCookieConsent = getLocalStorage("cookie_consent", null);
 
-  const acceptConsent = () => {
-    setCookie("consent", "true");
-    setConsent("true");
-  };
+    setCookieConsent(storedCookieConsent);
+  }, [setCookieConsent]);
 
-  const declineConsent = () => {
-    setCookie("consent", "false");
-    setConsent("false");
-  };
+  useEffect(() => {
+    const newValue = cookieConsent ? "granted" : "denied";
 
-  if (consent === null) {
-    return null;
-  }
+    window.gtag("consent", "update", {
+      analytics_storage: newValue,
+    });
 
-  if (consent === undefined) {
-    return (
-      <div className={styles.consent}>
-        <p className={styles.consentInfo}>
-          Używamy ciasteczek, aby analizować ruch na naszej stronie, dzięki
-          czemu jesteśmy w stanie stale polepszać twój komfort.
-        </p>
-        <div className={styles.consentButtonContainer}>
-          <button
-            className={`${styles.consentButton} ${styles.decline}`}
-            onClick={declineConsent}
-          >
-            Nie zgadzam się
-          </button>
-          <button className={styles.consentButton} onClick={acceptConsent}>
-            Zgadzam się
-          </button>
-        </div>
+    setLocalStorage("cookie_consent", cookieConsent);
+  }, [cookieConsent]);
+
+  return (
+    <div
+      className={`${styles.consent} ${
+        cookieConsent !== null ? "hidden" : "flex"
+      }`}
+    >
+      <p className={styles.consentInfo}>
+        Używamy ciasteczek, aby analizować ruch na naszej stronie, dzięki czemu
+        jesteśmy w stanie stale polepszać twój komfort.
+      </p>
+      <div className={styles.consentButtonContainer}>
+        <button
+          className={`${styles.consentButton} ${styles.decline}`}
+          onClick={() => setCookieConsent(false)}
+        >
+          Nie zgadzam się
+        </button>
+        <button
+          className={styles.consentButton}
+          onClick={() => setCookieConsent(true)}
+        >
+          Zgadzam się
+        </button>
       </div>
-    );
-  }
-
-  if (consent === "true") {
-    return (
-      <>
-        <script src="https://www.googletagmanager.com/gtag/js?id=G-4GZVX3W2F6" />
-        <script id="google-analytics">
-          {`
-         window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-         gtag('js', new Date());
-
-           gtag('config', 'G-4GZVX3W2F6');
-        `}
-        </script>
-      </>
-    );
-  }
+    </div>
+  );
 }
