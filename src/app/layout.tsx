@@ -7,6 +7,7 @@ import Footer from "./components/Footer/Footer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./utils/authOptions";
 import Scroll from "./components/Scroll";
+import CookiesConsent from "./components/CookiesConsent/CookiesConsent";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -51,6 +52,7 @@ export default async function RootLayout({
     <html lang="pl">
       <body className={poppins.className}>
         <Scroll />
+        <CookiesConsent />
         <Provider session={session}>
           <Navbar />
           {children}

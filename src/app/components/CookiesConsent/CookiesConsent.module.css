@@ -12,7 +12,7 @@
 
 .consentButton {
   padding: 0.75rem 0.5rem;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
   border: none;
   margin-right: 1rem;
   font-weight: 700;
@@ -26,10 +26,19 @@
 .consentButtonContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-left: 5rem;
+  gap: 2rem;
 }
 
 .consentInfo {
   padding: 0 1rem;
+}
+
+.decline {
+  border: none;
+  background: none;
+  box-shadow: none;
+  font-weight: 400;
 }
 
 @media only screen and (max-width: 700px) {
@@ -41,5 +50,7 @@
     width: 100%;
     display: flex;
     padding: 0.25rem 1rem;
+    margin-top: 0.5rem;
+    margin-left: 0;
   }
 }
