@@ -38,6 +38,7 @@ model Product {
   GiftCode      GiftCode[]
   Invoice       Invoice[]  @relation("InvoiceToProduct")
   owners        User[]     @relation("ProductToUser")
+  priority      Int?
 }
 
 model Invoice {

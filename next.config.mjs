@@ -16,12 +16,7 @@ const withMDX = nextMDX({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "res.cloudinary.com",
-      "api.backlinko.com",
-      "scastiel.dev",
-      "images.pexels.com",
-    ],
+    domains: ["res.cloudinary.com", "api.backlinko.com", "images.pexels.com"],
   },
   async headers() {
     return [

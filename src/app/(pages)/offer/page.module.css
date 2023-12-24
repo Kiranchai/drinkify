@@ -90,6 +90,22 @@
   border-radius: 100%;
 }
 
+.offer_new_item_flag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  font-size: 0.75rem;
+  background-color: rgb(47, 200, 0);
+  padding: 0.25rem;
+  transform: translate(-25%, -30%) rotate(25deg);
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+
 @media only screen and (max-width: 600px) {
   .offer_products {
     grid-template-columns: 1fr;
