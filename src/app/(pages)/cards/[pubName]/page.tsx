@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Game from "@/app/components/Game/Game";
 import prisma from "@/app/utils/db";
 import NotFound from "@/app/not-found";
+import GameWrapper from "@/app/components/Game/GameWrapper";
 
 export default async function GameSection({ params }) {
   const { pubName } = params;
@@ -44,7 +45,7 @@ export default async function GameSection({ params }) {
       }}
     >
       <div className={`mh ${styles.game_section}`}>
-        <Game
+        <GameWrapper
           cards={product.cards}
           cardImage={product.backgroundImg}
           gameType={product.gameType}

@@ -217,6 +217,10 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
                   onClick={rightSwipe}
                 />
               )}
+
+              <span className="absolute right-[1rem] bottom-[1rem] font-semibold text-fuchsia-200 text-lg">
+                {i + 1}
+              </span>
             </div>
           );
         })}
