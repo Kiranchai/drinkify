@@ -2,6 +2,7 @@ import styles from "@/app/components/Footer/Footer.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "public/logo-no-background.png";
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -28,6 +29,17 @@ const Footer = () => {
         </div>
       </div>
 
+      <div className="flex gap-4 items-center">
+        <Link href={"https://facebook.com/drinkifypolska"} target="_blank">
+          <FaFacebookF />
+        </Link>
+        <Link href={"https://instagram.com/drinkifypolska"} target="_blank">
+          <FaInstagram />
+        </Link>
+        <Link href={"https://tiktok.com/@drinkifypolska"} target="_blank">
+          <FaTiktok />
+        </Link>
+      </div>
       <span className={styles.copyright_span}>&copy; 2023 Drinkify</span>
     </footer>
   );

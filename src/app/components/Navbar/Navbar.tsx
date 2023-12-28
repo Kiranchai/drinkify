@@ -17,7 +17,6 @@ import { useCart } from "@/app/contexts/CartContext";
 import styles from "@/app/components/Navbar/Navbar.module.css";
 import { signOut, useSession } from "next-auth/react";
 import RedeemCodeModal from "../RedeemCodeModal/RedeemCodeModal";
-// import RedeemCodeModal from "../Modals/RedeemCodeModal/RedeemCodeModal";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
