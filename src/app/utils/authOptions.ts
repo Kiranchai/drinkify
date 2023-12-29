@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -52,7 +53,7 @@ export const authOptions: NextAuthOptions = {
             },
           });
 
-          if (!user) {
+          if (!user || user.password === null) {
             return { error: "Podano niepoprawne dane logowania" };
           }
 
@@ -68,7 +69,6 @@ export const authOptions: NextAuthOptions = {
             return { error: "Twój email jest niezweryfikowany!" };
           }
 
-          console.log(`Logged in user: ${user.email}`);
           return user;
         } catch (err) {
           console.error(err);
@@ -77,21 +77,63 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
+    }),
   ],
   session: {
     strategy: "jwt",
     maxAge: 24 * 60 * 60,
   },
   callbacks: {
-    async signIn({ user }: { user: any }) {
+    async signIn({ user, account, profile }: any) {
       if (user?.error) {
         throw new Error(user.error);
-      } else {
-        return true;
       }
+
+      const { id, email } = user;
+
+      const existingUser = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!existingUser) {
+        await prisma.user.create({
+          data: {
+            id,
+            email,
+          },
+        });
+      }
+
+      console.log(`Logged in user: ${user.email} with ${account.provider}`);
+      return true;
     },
-    async jwt({ token, user }: any) {
-      if (user) {
+    async jwt({ token, user, account, profile }: any) {
+      if (account?.type === "credentials") {
+        token.userId = user.id;
+        token.email = user.email;
+        token.ownedProducts = user.ownedProducts;
+
+        return token;
+      }
+
+      if (profile) {
+        const user = await prisma.user.findUnique({
+          where: {
+            email: profile.email,
+          },
+          include: {
+            ownedProducts: true,
+          },
+        });
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+
         token.userId = user.id;
         token.email = user.email;
         token.ownedProducts = user.ownedProducts;

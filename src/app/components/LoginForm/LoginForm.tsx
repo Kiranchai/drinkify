@@ -10,6 +10,7 @@ import TokenResetModal from "@/app/components/TokenResetModal/TokenResetModal";
 import PasswordResetModal from "../PasswordResetModal/PasswordResetModal";
 import { signIn } from "next-auth/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
 
 export function LoginForm() {
   const router = useRouter();
@@ -159,6 +160,22 @@ export function LoginForm() {
           )}
         </button>
       </form>
+
+      <div className="flex flex-col items-center mt-6 mb-10">
+        <span className="w-full text-center ">lub za pomocą</span>
+
+        <div className="flex items-center justify-center w-full mt-4 gap-4">
+          <button
+            onClick={async (e) => {
+              e.preventDefault();
+              await signIn("google");
+            }}
+            className="w-full h-full max-w-[3rem] aspect-square rounded-full bg-slate-200 p-2 text-2xl text-center flex items-center justify-center"
+          >
+            <FcGoogle />
+          </button>
+        </div>
+      </div>
       <span
         style={{
           paddingBlock: "1rem",
