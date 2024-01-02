@@ -73,7 +73,6 @@
 .welcome_header {
   font-size: clamp(2.5rem, 5vw, 4rem);
   line-height: clamp(4rem, 6vw, 6rem);
-
   color: #ffffff;
   font-weight: 700;
   text-shadow: 2px 2px 2px black;
