@@ -16,6 +16,7 @@ import partyImage3 from "public/party_3.jpg";
 import cards from "public/cards.webp";
 import { Metadata } from "next";
 import { getPostData } from "./utils/posts";
+import prisma from "./utils/db";
 
 export const metadata: Metadata = {
   title: "Drinkify - gry imprezowe zawsze na wyciągnięcie ręki",
@@ -24,6 +25,17 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 export default async function Home() {
   const post = await getPostData("5-najlepszych-gier-imprezowych");
+  const featuredProducts = await prisma.product.findMany({
+    select: {
+      name: true,
+      thumbnail: true,
+      pubName: true,
+    },
+    orderBy: {
+      priority: "desc",
+    },
+    take: 3,
+  });
 
   return (
     <main className={styles.home_section}>
@@ -215,7 +227,39 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col items-center p-10 bg-[#1e0324]">
+      <section className="flex flex-col items-center w-full bg-gradient-to-b from-[#18031d] to-[#280432] pb-16">
+        <h2 className="sm:text-5xl font-bold mt-10 mb-12 text-center p-4 text-4xl">
+          Wyróżnione produkty
+        </h2>
+        <div className="grid lg:grid-cols-3 items-center w-full lg:max-w-[80rem] gap-28 py-8 px-4 grid-cols-1 max-w-[25rem] lg:gap-16">
+          {featuredProducts.map((prod) => {
+            return (
+              <>
+                <div key={prod.name} className="flex flex-col items-center">
+                  <div className="relative w-full aspect-square mb-6">
+                    <Image
+                      src={prod.thumbnail}
+                      alt={`Miniaturka ${prod.name}`}
+                      fill
+                      className="filter drop-shadow-2xl "
+                    />
+                  </div>
+                  <span className="font-semibold text-2xl text-center">
+                    {prod.name}
+                  </span>
+                  <Link
+                    className="mt-4 bg-[#66006b] px-6 py-2 rounded-md"
+                    href={`/offer/${prod.pubName}`}
+                  >
+                    Pokaż więcej
+                  </Link>
+                </div>
+              </>
+            );
+          })}
+        </div>
+      </section>
+      <section className="flex flex-col items-center p-10 bg-[#280432]">
         <h2 className="text-5xl font-semibold mb-16 mt-4 text-center">
           Nasz blog!
         </h2>

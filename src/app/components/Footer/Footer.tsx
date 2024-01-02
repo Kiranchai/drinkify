@@ -40,7 +40,7 @@ const Footer = () => {
           <FaTiktok />
         </Link>
       </div>
-      <span className={styles.copyright_span}>&copy; 2023 Drinkify</span>
+      <span className={styles.copyright_span}>&copy; 2024 Drinkify</span>
     </footer>
   );
 };
