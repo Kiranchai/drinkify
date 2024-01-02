@@ -79,17 +79,20 @@ const Navbar = () => {
           />
 
           <NavbarListItem
-            icon={<GiCardPlay />}
-            destination={"cards"}
-            name={"Moje karty"}
-            collapse={handleOnToggle}
-          />
-          <NavbarListItem
             icon={<MdLocalOffer />}
             destination={"offer"}
             name={"Oferta"}
             collapse={handleOnToggle}
           />
+
+          {status === "authenticated" && (
+            <NavbarListItem
+              icon={<GiCardPlay />}
+              destination={"cards"}
+              name={"Moje karty"}
+              collapse={handleOnToggle}
+            />
+          )}
 
           {status === "authenticated" && (
             <li
