@@ -26,6 +26,7 @@ export default function TestChart({ data }: { data: {} }) {
             fill: "#602c5d",
           },
         }}
+        tooltip={{ trigger: "item" }}
       />
     </>
   );
