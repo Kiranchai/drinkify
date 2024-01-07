@@ -18,6 +18,7 @@
   );
   --blueish: rgb(158, 158, 158);
   --light-pink: #8d1380;
+  --primary: #602c5d;
 }
 
 * {

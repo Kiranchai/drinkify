@@ -1,9 +1,8 @@
 import styles from "./page.module.css";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import Game from "@/app/components/Game/Game";
 import prisma from "@/app/utils/db";
-import NotFound from "@/app/not-found";
+import NotFound from "@/app/(pages)/not-found";
 import GameWrapper from "@/app/components/Game/GameWrapper";
 
 export default async function GameSection({ params }) {

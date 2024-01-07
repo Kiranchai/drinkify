@@ -7,6 +7,7 @@ import {
   MdShoppingCart,
   MdLogin,
   MdLocalOffer,
+  MdSpaceDashboard,
 } from "react-icons/md";
 import { HiGift } from "react-icons/hi2";
 import { GiCardPlay } from "react-icons/gi";
@@ -105,6 +106,15 @@ const Navbar = () => {
                 <HiGift />
               </span>
             </li>
+          )}
+
+          {session?.user?.isAdmin === true && (
+            <NavbarListItem
+              icon={<MdSpaceDashboard />}
+              name={"Panel"}
+              destination={"dashboard"}
+              collapse={handleOnToggle}
+            />
           )}
 
           {status === "authenticated" ? (

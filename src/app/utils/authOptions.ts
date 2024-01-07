@@ -116,6 +116,7 @@ export const authOptions: NextAuthOptions = {
         token.userId = user.id;
         token.email = user.email;
         token.ownedProducts = user.ownedProducts;
+        token.isAdmin = user.isAdmin;
 
         return token;
       }
@@ -137,6 +138,7 @@ export const authOptions: NextAuthOptions = {
         token.userId = user.id;
         token.email = user.email;
         token.ownedProducts = user.ownedProducts;
+        token.isAdmin = user.isAdmin;
       }
       return token;
     },
@@ -147,6 +149,7 @@ export const authOptions: NextAuthOptions = {
           id: token.userId,
           email: token.email,
           ownedProducts: token.ownedProducts,
+          isAdmin: token.isAdmin,
         },
       };
       return session;

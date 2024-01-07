@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./page.module.css";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import NotFound from "@/app/not-found";
+import NotFound from "@/app/(pages)/not-found";
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   try {

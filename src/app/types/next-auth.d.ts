@@ -6,6 +6,7 @@ declare module "next-auth" {
       id: string;
       email: string;
       ownedProducts: Array;
+      isAdmin: Boolean;
     };
   }
 }

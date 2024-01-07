@@ -5,7 +5,7 @@ import Image from "next/image";
 import Game from "@/app/components/Game/Game";
 import prisma from "@/app/utils/db";
 import type { Metadata } from "next";
-import NotFound from "@/app/not-found";
+import NotFound from "@/app/(pages)/not-found";
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { pubName } = params;

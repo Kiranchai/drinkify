@@ -42,7 +42,7 @@ export default function GameWrapper({
       </p>
 
       <button
-        className="bg-lightPink p-2 rounded-md font-semibold shadow-md"
+        className="bg-[#8d1380] p-2 rounded-md font-semibold shadow-md"
         onClick={() => {
           setEnteredGame(true);
         }}

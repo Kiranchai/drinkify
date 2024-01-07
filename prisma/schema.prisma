@@ -46,6 +46,7 @@ model User {
   Invoice                Invoice[]
   passwordResetToken     PasswordResetToken?
   ownedProducts          Product[]               @relation("ProductToUser")
+  isAdmin                Boolean                 @default(false)
   accounts               Account[]
   sessions               Session[]
 }

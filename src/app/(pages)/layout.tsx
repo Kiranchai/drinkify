@@ -1,14 +1,14 @@
-import "./globals.css";
+import "../globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Provider } from "@/app/provider.js";
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./utils/authOptions";
-import Scroll from "./components/Scroll";
-import CookiesConsent from "./components/CookiesConsent/CookiesConsent";
-import GoogleAnalytics from "./components/GoogleAnalytics";
+import { authOptions } from "../utils/authOptions";
+import Scroll from "../components/Scroll";
+import CookiesConsent from "../components/CookiesConsent/CookiesConsent";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -51,12 +51,12 @@ export default async function RootLayout({
 
   return (
     <html lang="pl">
-      {process.env.NODE_ENV === "production" && (
+      {/* {process.env.NODE_ENV === "production" && (
         <GoogleAnalytics GA_MEASUREMENT_ID="G-4GZVX3W2F6" />
-      )}
+      )} */}
       <body className={poppins.className}>
         <Scroll />
-        {process.env.NODE_ENV === "production" && <CookiesConsent />}
+        {/* {process.env.NODE_ENV === "production" && <CookiesConsent />} */}
         <Provider session={session}>
           <Navbar />
           {children}
