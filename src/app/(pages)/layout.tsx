@@ -51,9 +51,9 @@ export default async function RootLayout({
 
   return (
     <html lang="pl">
-      {/* {process.env.NODE_ENV === "production" && (
+      {process.env.NODE_ENV === "production" && (
         <GoogleAnalytics GA_MEASUREMENT_ID="G-4GZVX3W2F6" />
-      )} */}
+      )}
       <body className={poppins.className}>
         <Scroll />
         {/* {process.env.NODE_ENV === "production" && <CookiesConsent />} */}
