@@ -33,14 +33,6 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   }
 }
 
-// export async function generateStaticParams() {
-//   const products = await prisma.product.findMany();
-
-//   return products.map((product) => {
-//     pubName: product.pubName;
-//   });
-// }
-
 export const dynamic = "force-dynamic";
 
 export default async function Product({ params }) {
@@ -125,8 +117,11 @@ export default async function Product({ params }) {
                 <Image
                   src={product.backgroundImg}
                   alt="drink"
-                  fill
-                  sizes="(max-width:440px) 100vw, 600px"
+                  // fill
+                  // sizes="(max-width:440px) 100vw, 600px"
+                  className="object-contain"
+                  width={600}
+                  height={600}
                   priority
                 />
               )}

@@ -102,6 +102,7 @@ export default function ProductForm({
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
           disabled={!editMode}
+          required
         />
         <TextField
           id="stripeId"
