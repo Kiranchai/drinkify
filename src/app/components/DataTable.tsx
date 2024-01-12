@@ -6,23 +6,29 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Link from "next/link";
 
 export default function DataTable({
   data,
+  columns,
+  clickable,
 }: {
-  data: {
-    email: string;
-    purchaseDate: Date;
-    price: bigint;
-  }[];
+  columns: String[];
+  data: Array<{}>;
+  clickable?: Boolean;
 }) {
-  const formatDate = (purchaseDate: Date) => {
-    const splitted = purchaseDate.toISOString().split("T");
-    return `${splitted[0]} ${splitted[1].slice(0, 5)}`;
-  };
-  const formatPrice = (price: bigint) => {
-    let formatted = Number(price) / 100;
-    return formatted.toFixed(2).toString();
+  const removeFieldsStartingWithUnderscore = (arr: Array<{}>) => {
+    return arr.map((obj) => {
+      const newObj = {};
+
+      for (const key in obj) {
+        if (!key.startsWith("_")) {
+          newObj[key] = obj[key];
+        }
+      }
+
+      return newObj;
+    });
   };
 
   return (
@@ -43,24 +49,34 @@ export default function DataTable({
       >
         <TableHead>
           <TableRow>
-            <TableCell>Email</TableCell>
-            <TableCell align="center">Data zakupu</TableCell>
-            <TableCell align="center">Suma</TableCell>
+            {columns.map((col, idx) => {
+              return <TableCell key={idx}>{col}</TableCell>;
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((row) => (
+          {removeFieldsStartingWithUnderscore(data).map((row, idx) => (
             <TableRow
-              key={row.email}
+              key={idx}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.email}
-              </TableCell>
-              <TableCell align="center">
-                {formatDate(row.purchaseDate)}
-              </TableCell>
-              <TableCell align="center">{formatPrice(row.price)} zł</TableCell>
+              {Object.values(row).map((item, colIdx) => {
+                if (colIdx === 0 && clickable) {
+                  return (
+                    <TableCell key={colIdx} component="th" scope="row">
+                      <Link href={`/dashboard/products/${data[idx]["_id"]}`}>
+                        {item.toString()}
+                      </Link>
+                    </TableCell>
+                  );
+                }
+
+                return (
+                  <TableCell key={colIdx} component="th" scope="row">
+                    {item.toString()}
+                  </TableCell>
+                );
+              })}
             </TableRow>
           ))}
         </TableBody>

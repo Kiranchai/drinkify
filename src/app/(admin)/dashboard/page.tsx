@@ -7,6 +7,7 @@ import TestChart from "@/app/components/Chart";
 import ProgressBar from "@/app/components/ProgressBar";
 import DataTable from "@/app/components/DataTable";
 import prisma from "@/app/utils/db";
+import { formatDate, formatPrice } from "@/app/utils/formatters";
 
 export default async function page() {
   type KEYS = "Ilość kont" | "Transakcje" | "Przychód" | "Coś";
@@ -49,14 +50,6 @@ export default async function page() {
     },
   ];
 
-  const recentInvoices = allInvoices.slice(0, 5).map((invoice) => {
-    return {
-      email: invoice.user.email,
-      purchaseDate: invoice.createdAt,
-      price: invoice.amount,
-    };
-  });
-
   const productCounts = {};
 
   allInvoices.forEach((invoice) => {
@@ -64,6 +57,14 @@ export default async function page() {
       const productName = product.name;
       productCounts[productName] = (productCounts[productName] || 0) + 1;
     });
+  });
+
+  const recentInvoices = allInvoices.slice(0, 5).map((invoice) => {
+    return {
+      email: invoice.user.email,
+      purchaseDate: formatDate(invoice.createdAt),
+      price: formatPrice(invoice.amount),
+    };
   });
 
   return (
@@ -116,7 +117,10 @@ export default async function page() {
             <h2 className="font-bold text-xl text-primary mb-3 ">
               Ostatnie transakcje
             </h2>
-            <DataTable data={recentInvoices} />
+            <DataTable
+              data={recentInvoices}
+              columns={["Email", "Data zakupu", "Suma"]}
+            />
           </div>
         </div>
       </main>
