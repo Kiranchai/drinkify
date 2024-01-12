@@ -56,7 +56,7 @@ export default function Drawer({ children }) {
           />
         </ul>
       </nav>
-      <div className="ml-0 lg:ml-[180px] xl:ml-[280px] transition-all duration-[400ms] mt-[3rem] lg:mt-0">
+      <div className="ml-0 lg:ml-[180px] xl:ml-[280px] transition-all duration-[400ms] mt-[3rem] lg:mt-0 w-full">
         {children}
       </div>
     </div>
