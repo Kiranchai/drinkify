@@ -22,7 +22,7 @@ export default function CartComponent() {
     cartItems.forEach((item) => {
       sum += Number(item.price);
     });
-    setTotal(sum);
+    setTotal(Number(sum.toFixed(2)));
   }, [cartItems]);
 
   if (cartItems?.length === 0) {
