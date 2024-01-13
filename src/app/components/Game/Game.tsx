@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { useState, useEffect, createRef, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { handleTouchMove, handleTouchStart } from "@/app/utils/SwipeListener";
 import { MdArrowForward, MdArrowBack } from "react-icons/md";
-import { CardTypes } from "@/app/types/CardTypes";
 import styles from "@/app/(pages)/cards/[pubName]/page.module.css";
 import Image from "next/image";
 import TBCard from "../TBCard/TBCard";
+import { GameType } from "@prisma/client";
 
 const Game = ({ cards, isDemo, cardImage, gameType }) => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -105,7 +105,7 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
 
   const renderSwitch = (param: string, card) => {
     switch (param) {
-      case CardTypes.NHIE:
+      case GameType.NHIE:
         return (
           <>
             <div className={styles.gamecard_container}>
@@ -140,7 +140,7 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
             </div>
           </>
         );
-      case CardTypes.TOD:
+      case GameType.TOD:
         return (
           <>
             <div className={styles.gamecard_container_tod}>
@@ -169,7 +169,7 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
             </div>
           </>
         );
-      case CardTypes.TB:
+      case GameType.TB:
         return (
           <>
             <TBCard

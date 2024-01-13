@@ -174,7 +174,7 @@ export default async function Product({ params }) {
             cards={product.DemoCard}
             isDemo={true}
             cardImage={product.backgroundImg}
-            gameType={product.gameType}
+            gameType={product.type}
           />
         </div>
         {product?.rules && (

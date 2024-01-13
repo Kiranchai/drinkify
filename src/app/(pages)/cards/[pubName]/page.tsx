@@ -19,7 +19,7 @@ export default async function GameSection({ params }) {
       owners: true,
       cards: true,
       thumbnail: true,
-      gameType: true,
+      type: true,
       name: true,
       backgroundImg: true,
     },
@@ -47,7 +47,7 @@ export default async function GameSection({ params }) {
         <GameWrapper
           cards={product.cards}
           cardImage={product.backgroundImg}
-          gameType={product.gameType}
+          gameType={product.type}
           isDemo={false}
         />
       </div>

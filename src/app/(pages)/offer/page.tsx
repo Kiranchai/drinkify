@@ -13,8 +13,7 @@ export const metadata: Metadata = {
 
 export default async function Offer() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT}/api/products`,
-    { next: { revalidate: 3600, tags: ["products"] } }
+    `${process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT}/api/products`
   );
   const data = await res.json();
   const { products } = data;
