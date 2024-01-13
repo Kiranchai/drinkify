@@ -41,14 +41,20 @@ model User {
   email                  String                  @unique
   emailVerified          Boolean                 @default(false)
   password               String?
+  isAdmin                Boolean                 @default(false)
+  accounts               Account[]
   emailVerificationToken EmailVerificationToken?
   giftCodes              GiftCode[]
   Invoice                Invoice[]
   passwordResetToken     PasswordResetToken?
-  ownedProducts          Product[]               @relation("ProductToUser")
-  isAdmin                Boolean                 @default(false)
-  accounts               Account[]
   sessions               Session[]
+  ownedProducts          Product[]               @relation("ProductToUser")
+}
+
+enum GameType {
+  NHIE
+  TOD
+  TB
 }
 
 model Product {
@@ -63,12 +69,13 @@ model Product {
   gameType      String
   backgroundImg String?
   rules         String?
+  priority      Int?
   cards         Card[]
   DemoCard      DemoCard[]
   GiftCode      GiftCode[]
   Invoice       Invoice[]  @relation("InvoiceToProduct")
   owners        User[]     @relation("ProductToUser")
-  priority      Int?
+  type          GameType?
 }
 
 model Invoice {

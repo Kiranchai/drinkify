@@ -1,5 +1,13 @@
 "use client";
-import { Button, Paper, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import type { Product } from "@prisma/client";
@@ -7,6 +15,7 @@ import * as Yup from "yup";
 import { MdSave } from "react-icons/md";
 import { loadingToast } from "../utils/toasts";
 import YupMessages from "@/app/yupMessages.json";
+import { GameType } from "@prisma/client";
 
 const ProductSchema = Yup.object().shape({
   name: Yup.string()
@@ -18,7 +27,7 @@ const ProductSchema = Yup.object().shape({
   description: Yup.string().required(YupMessages.required),
   pubName: Yup.string().required(YupMessages.required),
   thumbnail: Yup.string().url(YupMessages.url).required(YupMessages.required),
-  gameType: Yup.string().required(YupMessages.required),
+  type: Yup.string().required(YupMessages.required),
   backgroundImg: Yup.string()
     .url(YupMessages.url)
     .required(YupMessages.required),
@@ -44,7 +53,7 @@ export default function ProductForm({
       description: initialValues?.description || "",
       pubName: initialValues?.pubName || "",
       thumbnail: initialValues?.thumbnail || "",
-      gameType: initialValues?.gameType || "",
+      type: initialValues?.type || "",
       backgroundImg: initialValues?.backgroundImg || "",
       rules: initialValues?.rules || "",
       priority: initialValues?.priority || 0,
@@ -102,7 +111,6 @@ export default function ProductForm({
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
           disabled={!editMode}
-          required
         />
         <TextField
           id="stripeId"
@@ -188,17 +196,30 @@ export default function ProductForm({
             </span>
           ))}
 
-        <TextField
-          id="gameType"
-          name="gameType"
-          label="Typ gry"
-          value={formik.values.gameType}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.gameType && Boolean(formik.errors.gameType)}
-          helperText={formik.touched.gameType && formik.errors.gameType}
-          disabled={!editMode}
-        />
+        <FormControl>
+          <InputLabel id="type-label">Typ gry</InputLabel>
+          <Select
+            id="type"
+            name="type"
+            label="Typ gry"
+            value={formik.values.type}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.type && Boolean(formik.errors.type)}
+            // helperText={formik.touched.gameType && formik.errors.gameType}
+            disabled={!editMode}
+          >
+            <MenuItem className="text-primary" value={GameType.NHIE}>
+              Alkokarty
+            </MenuItem>
+            <MenuItem className="text-primary" value={GameType.TOD}>
+              Prawda czy wyzwanie
+            </MenuItem>
+            <MenuItem className="text-primary" value={GameType.TB}>
+              Tabu
+            </MenuItem>
+          </Select>
+        </FormControl>
         <TextField
           id="backgroundImg"
           name="backgroundImg"
