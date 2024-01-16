@@ -9,6 +9,13 @@ export default async function page({ params }) {
     where: {
       id,
     },
+    include: {
+      cards: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
   });
 
   return (
@@ -16,7 +23,7 @@ export default async function page({ params }) {
       <h1 className="text-[#602c5d] text-2xl font-bold mb-8">
         {product?.name}
       </h1>
-      <ProductForm initialValues={product} />
+      <ProductForm initialValues={product} cards={product.cards} />
     </main>
   );
 }

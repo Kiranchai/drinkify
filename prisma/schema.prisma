@@ -115,8 +115,8 @@ model PasswordResetToken {
 model Card {
   id             String   @id @default(cuid())
   createdAt      DateTime @default(now())
-  title          String
-  description    String
+  title          String?
+  description    String?
   productId      String
   forbiddenWords String[]
   dare           String?

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,10 +13,12 @@ export default function DataTable({
   data,
   columns,
   clickable,
+  onRowClick,
 }: {
   columns: String[];
   data: Array<{}>;
   clickable?: Boolean;
+  onRowClick?: (rowData: {}) => void;
 }) {
   const removeFieldsStartingWithUnderscore = (arr: Array<{}>) => {
     return arr.map((obj) => {
@@ -59,13 +62,15 @@ export default function DataTable({
             <TableRow
               key={idx}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              onClick={() => onRowClick && onRowClick(row)}
+              style={{ cursor: onRowClick ? "pointer" : "default" }}
             >
               {Object.values(row).map((item, colIdx) => {
                 if (colIdx === 0 && clickable) {
                   return (
                     <TableCell key={colIdx} component="th" scope="row">
                       <Link href={`/dashboard/products/${data[idx]["_id"]}`}>
-                        {item.toString()}
+                        {item?.toString()}
                       </Link>
                     </TableCell>
                   );
@@ -73,7 +78,7 @@ export default function DataTable({
 
                 return (
                   <TableCell key={colIdx} component="th" scope="row">
-                    {item.toString()}
+                    {item?.toString()}
                   </TableCell>
                 );
               })}
