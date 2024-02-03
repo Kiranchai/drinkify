@@ -40,9 +40,9 @@ export default async function Offer() {
                     </span>
                   )}
 
-                  {product.pubName === "sylwestrowe-alkokarty" && (
+                  {/* {product.pubName === "sylwestrowe-alkokarty" && (
                     <span className={styles.offer_new_item_flag}>NOWOŚĆ!</span>
-                  )}
+                  )} */}
 
                   <div className={styles.offer_image_wrapper}>
                     <Image
