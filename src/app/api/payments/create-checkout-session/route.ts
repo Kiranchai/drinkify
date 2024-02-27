@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
       mode: "payment",
       customer: customer.id,
       success_url: `${process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT}/success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT}/canceled`,
+      cancel_url: `${process.env.NEXT_PUBLIC_FRONTEND_ENDPOINT}/cart`,
     });
     return NextResponse.json({ url: checkoutSession.url });
   } catch (err) {
