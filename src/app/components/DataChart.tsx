@@ -2,7 +2,11 @@
 import React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
-export default function TestChart({ data }: { data: {} }) {
+export default function DataChart({ data }: { data: {} }) {
+  if (Object.keys(data).length === 0) {
+    return;
+  }
+
   return (
     <>
       <BarChart

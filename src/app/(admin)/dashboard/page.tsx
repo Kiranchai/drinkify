@@ -3,11 +3,11 @@ import { LiaExchangeAltSolid } from "react-icons/lia";
 import { MdAttachMoney } from "react-icons/md";
 import { FaQuestion } from "react-icons/fa";
 import React from "react";
-import TestChart from "@/app/components/Chart";
 import ProgressBar from "@/app/components/ProgressBar";
 import DataTable from "@/app/components/DataTable";
 import prisma from "@/app/utils/db";
 import { formatDate, formatPrice } from "@/app/utils/formatters";
+import DataChart from "@/app/components/DataChart";
 
 export default async function page() {
   type KEYS = "Ilość kont" | "Transakcje" | "Przychód" | "Coś";
@@ -105,7 +105,7 @@ export default async function page() {
             <span className="text-primary font-bold text-xl">
               Sprzedaż produktów
             </span>
-            <TestChart data={productCounts} />
+            {productCounts && <DataChart data={productCounts} />}
           </div>
           <div className="w-full bg-slate-50 rounded-md shadow-md p-4 divide-y row-span-3 h-[25rem] flex flex-col gap-2 col-span-4 sm:col-span-1">
             <span className="text-primary font-bold text-xl">Cel</span>
