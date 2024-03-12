@@ -8,6 +8,7 @@ import styles from "@/app/(pages)/cards/[pubName]/page.module.css";
 import Image from "next/image";
 import TBCard from "../TBCard/TBCard";
 import { GameType } from "@prisma/client";
+import JinxCard from "../JinxCard";
 
 const Game = ({ cards, isDemo, cardImage, gameType }) => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -179,6 +180,8 @@ const Game = ({ cards, isDemo, cardImage, gameType }) => {
             />
           </>
         );
+      case GameType.JINX:
+        return <JinxCard image={cardImage} title={card.title} />;
     }
   };
 

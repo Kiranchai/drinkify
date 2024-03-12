@@ -251,6 +251,9 @@ export default function ProductForm({
               <MenuItem className="text-primary" value={GameType.TB}>
                 Tabu
               </MenuItem>
+              <MenuItem className="text-primary" value={GameType.JINX}>
+                Jinx
+              </MenuItem>
             </Select>
           </FormControl>
           <TextField
@@ -405,6 +408,20 @@ export default function ProductForm({
                       return {
                         title: card.title,
                         forbiddenWords: card.forbiddenWords,
+                        id: card.id,
+                      };
+                    })}
+                  />
+                )}
+                {initialValues.type === "JINX" && (
+                  <DataTable
+                    columns={["Słowo klucz", "ID"]}
+                    onRowClick={(card) => {
+                      handleModalOpen(card);
+                    }}
+                    data={cards.map((card) => {
+                      return {
+                        title: card.title,
                         id: card.id,
                       };
                     })}

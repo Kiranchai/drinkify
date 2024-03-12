@@ -62,7 +62,7 @@ export default function CardForm({
     <div className="flex flex-col mb-6">
       <h2 className="font-bold text-primary text-xl mb-8">Karta</h2>
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6">
-        {(type === "NHIE" || type === "TB") && (
+        {(type === "NHIE" || type === "TB" || type === "JINX") && (
           <TextField
             id="title"
             name="title"
