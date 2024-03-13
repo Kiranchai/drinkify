@@ -12,6 +12,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   const product = await prisma.product.findUnique({
     where: {
       pubName: pubName,
+      isPublished: true,
     },
     include: {
       owners: {
@@ -40,6 +41,7 @@ export default async function Product({ params }) {
   const product = await prisma.product.findUnique({
     where: {
       pubName: pubName,
+      isPublished: true,
     },
     include: {
       owners: {

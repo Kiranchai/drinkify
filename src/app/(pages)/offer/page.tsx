@@ -36,15 +36,15 @@ export default async function Offer() {
                   href={`/offer/${product.pubName}`}
                   key={product.pubName as React.Key}
                 >
-                  {product.pubName === "alkokarty" && (
+                  {product.isBestseller && (
                     <span className={styles.offer_bestseller_flag}>
                       BESTSELLER
                     </span>
                   )}
 
-                  {/* {product.pubName === "sylwestrowe-alkokarty" && (
+                  {product.isNew && (
                     <span className={styles.offer_new_item_flag}>NOWOŚĆ!</span>
-                  )} */}
+                  )}
 
                   <div className={styles.offer_image_wrapper}>
                     <Image

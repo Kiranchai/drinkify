@@ -2,6 +2,7 @@
 import {
   Button,
   FormControl,
+  FormGroup,
   InputLabel,
   MenuItem,
   Paper,
@@ -19,6 +20,7 @@ import { GameType } from "@prisma/client";
 import DataTable from "./DataTable";
 import CardModal from "./CardModal";
 import { useRouter } from "next/navigation";
+import CFCheckbox from "./CFCheckbox";
 
 const ProductSchema = Yup.object().shape({
   name: Yup.string()
@@ -63,6 +65,9 @@ export default function ProductForm({
       backgroundImg: initialValues?.backgroundImg || "",
       rules: initialValues?.rules || "",
       priority: initialValues?.priority || 0,
+      isPublished: initialValues?.isPublished,
+      isBestseller: initialValues?.isBestseller || false,
+      isNew: initialValues?.isNew || false,
     },
     validationSchema: ProductSchema,
     onSubmit: async (values) => {
@@ -320,6 +325,36 @@ export default function ProductForm({
             helperText={formik.touched.priority && formik.errors.priority}
             disabled={!editMode}
           />
+          <h2 className="font-bold text-primary text-lg mt-8">Flagi</h2>
+          <FormGroup row className="gap-8">
+            <CFCheckbox
+              id={"isPublished"}
+              name={"isPublished"}
+              label={"Opublikowano"}
+              editMode={editMode}
+              value={formik.values.isPublished}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            <CFCheckbox
+              id={"isBestseller"}
+              name={"isBestseller"}
+              label={"Bestseller"}
+              editMode={editMode}
+              value={formik.values.isBestseller}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            <CFCheckbox
+              id={"isNew"}
+              name={"isNew"}
+              label={"Nowy produkt"}
+              editMode={editMode}
+              value={formik.values.isNew}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+          </FormGroup>
           <div>
             {editMode && (
               <div className="flex items-center gap-4">

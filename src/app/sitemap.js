@@ -11,6 +11,9 @@ export default async function sitemap() {
     select: {
       pubName: true,
     },
+    where: {
+      isPublished: true,
+    },
   });
 
   const sortedProducts = [...products].map(({ pubName }) => ({

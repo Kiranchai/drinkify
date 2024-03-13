@@ -9,6 +9,11 @@ export async function GET(request: NextRequest) {
       thumbnail: true,
       name: true,
       price: true,
+      isBestseller: true,
+      isNew: true,
+    },
+    where: {
+      isPublished: true,
     },
   });
 
