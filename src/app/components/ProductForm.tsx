@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import type { Card, Product } from "@prisma/client";
+import type { Card, DemoCard, Product } from "@prisma/client";
 import * as Yup from "yup";
 import { MdSave } from "react-icons/md";
 import { loadingToast } from "../utils/toasts";
@@ -44,10 +44,12 @@ export default function ProductForm({
   initialValues,
   cards,
   create,
+  demoCards,
 }: {
   initialValues?: Product;
   cards?: Card[];
   create?: Boolean;
+  demoCards?: DemoCard[];
 }) {
   const [editMode, setEditMode] = useState(create);
   const router = useRouter();
@@ -102,9 +104,11 @@ export default function ProductForm({
 
   const [modalShown, setModalShown] = useState(false);
   const [currentCard, setCurrentCard] = useState<Card>(null);
+  const [isDemo, setIsDemo] = useState(false);
 
-  const handleModalOpen = (card?) => {
+  const handleModalOpen = ({ isDemo, card }: { isDemo: boolean; card? }) => {
     setModalShown(true);
+    setIsDemo(isDemo);
     if (card) {
       setCurrentCard(card);
     } else {
@@ -393,7 +397,7 @@ export default function ProductForm({
                   variant="contained"
                   className="flex justify-center items-center bg-primary hover:bg-[#7f3d7a]"
                   onClick={() => {
-                    handleModalOpen();
+                    handleModalOpen({ isDemo: false });
                   }}
                 >
                   Dodaj
@@ -405,7 +409,7 @@ export default function ProductForm({
                   <DataTable
                     columns={["Tytuł", "Opis", "ID"]}
                     onRowClick={(card) => {
-                      handleModalOpen(card);
+                      handleModalOpen({ isDemo: false, card: card });
                     }}
                     data={cards.map((card) => {
                       return {
@@ -421,7 +425,7 @@ export default function ProductForm({
                   <DataTable
                     columns={["Prawda", "Wyzwanie", "ID"]}
                     onRowClick={(card) => {
-                      handleModalOpen(card);
+                      handleModalOpen({ isDemo: false, card: card });
                     }}
                     data={cards.map((card) => {
                       return {
@@ -437,7 +441,7 @@ export default function ProductForm({
                   <DataTable
                     columns={["Słowo klucz", "Zakazane", "ID"]}
                     onRowClick={(card) => {
-                      handleModalOpen(card);
+                      handleModalOpen({ isDemo: false, card: card });
                     }}
                     data={cards.map((card) => {
                       return {
@@ -452,9 +456,89 @@ export default function ProductForm({
                   <DataTable
                     columns={["Słowo klucz", "ID"]}
                     onRowClick={(card) => {
-                      handleModalOpen(card);
+                      handleModalOpen({ isDemo: false, card: card });
                     }}
                     data={cards.map((card) => {
+                      return {
+                        title: card.title,
+                        id: card.id,
+                      };
+                    })}
+                  />
+                )}
+              </div>
+            </div>
+          </Paper>
+          <Paper className="mt-8 p-4">
+            <div className="flex flex-col gap-6 mb-6">
+              <div className="flex items-center justify-between">
+                <h2 className="font-bold text-primary text-lg">Karty Demo</h2>
+                <Button
+                  variant="contained"
+                  className="flex justify-center items-center bg-primary hover:bg-[#7f3d7a]"
+                  onClick={() => {
+                    handleModalOpen({ isDemo: true });
+                  }}
+                >
+                  Dodaj
+                </Button>
+              </div>
+
+              <div className="shadow-lg">
+                {initialValues.type === "NHIE" && (
+                  <DataTable
+                    columns={["Tytuł", "Opis", "ID"]}
+                    onRowClick={(card) => {
+                      handleModalOpen({ isDemo: true, card: card });
+                    }}
+                    data={demoCards.map((card) => {
+                      return {
+                        title: card.title,
+                        description: card.description,
+                        id: card.id,
+                      };
+                    })}
+                  />
+                )}
+
+                {initialValues.type === "TOD" && (
+                  <DataTable
+                    columns={["Prawda", "Wyzwanie", "ID"]}
+                    onRowClick={(card) => {
+                      handleModalOpen({ isDemo: true, card: card });
+                    }}
+                    data={demoCards.map((card) => {
+                      return {
+                        truth: card.truth,
+                        dare: card.dare,
+                        id: card.id,
+                      };
+                    })}
+                  />
+                )}
+
+                {initialValues.type === "TB" && (
+                  <DataTable
+                    columns={["Słowo klucz", "Zakazane", "ID"]}
+                    onRowClick={(card) => {
+                      handleModalOpen({ isDemo: true, card: card });
+                    }}
+                    data={demoCards.map((card) => {
+                      return {
+                        title: card.title,
+                        forbiddenWords: card.forbiddenWords,
+                        id: card.id,
+                      };
+                    })}
+                  />
+                )}
+                {initialValues.type === "JINX" && (
+                  <DataTable
+                    columns={["Słowo klucz", "ID"]}
+                    onRowClick={(card) => {
+                      handleModalOpen({ isDemo: true, card: card });
+                    }}
+                    data={demoCards.map((card) => {
                       return {
                         title: card.title,
                         id: card.id,
@@ -472,6 +556,7 @@ export default function ProductForm({
             type={initialValues.type}
             create={currentCard === null}
             productId={initialValues.id}
+            isDemo={isDemo}
           />
         </>
       )}

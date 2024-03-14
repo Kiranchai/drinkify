@@ -9,6 +9,7 @@ export default function CardModal({
   type,
   create,
   productId,
+  isDemo,
 }) {
   return (
     <>
@@ -20,6 +21,7 @@ export default function CardModal({
             onClose={handleClose}
             create={create}
             productId={productId}
+            isDemo={isDemo}
           />
         </div>
       </Modal>

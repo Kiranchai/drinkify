@@ -15,6 +15,7 @@ export default async function page({ params }) {
           createdAt: "desc",
         },
       },
+      DemoCard: {},
     },
   });
 
@@ -23,7 +24,11 @@ export default async function page({ params }) {
       <h1 className="text-[#602c5d] text-2xl font-bold mb-8">
         {product?.name}
       </h1>
-      <ProductForm initialValues={product} cards={product.cards} />
+      <ProductForm
+        initialValues={product}
+        cards={product.cards}
+        demoCards={product.DemoCard}
+      />
     </main>
   );
 }

@@ -9,9 +9,9 @@ export default function JinxCard({
   title: string;
 }) {
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-3xl py-8 font-bold">Jinx it!</div>
-      <div className="my-4 py-4 px-8 font-normal text-4xl border-white border-dashed border-[1px] w-fit rounded-lg">
+    <div className="flex flex-col items-center px-6">
+      <div className="text-4xl py-8 font-bold">Jinx it!</div>
+      <div className="my-4 py-4 px-8 font-normal text-2xl border-white border-dashed border-[1px] w-fit rounded-lg">
         {title}
       </div>
       <div

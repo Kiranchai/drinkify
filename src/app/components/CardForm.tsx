@@ -22,12 +22,14 @@ export default function CardForm({
   onClose,
   create,
   productId,
+  isDemo,
 }: {
   initialValues?: Card;
   type: GameType;
   onClose: () => void;
   create: Boolean;
   productId: string;
+  isDemo: Boolean;
 }) {
   const router = useRouter();
 
@@ -36,14 +38,14 @@ export default function CardForm({
       id: initialValues?.id,
       productId: productId,
       title: initialValues?.title,
-      description: initialValues?.description,
+      description: initialValues?.description || "",
       truth: initialValues?.truth,
       dare: initialValues?.dare,
       forbiddenWords: initialValues?.forbiddenWords,
     },
     validationSchema: CardSchema,
     onSubmit: async (values) => {
-      const res = fetch("/api/admin/card", {
+      const res = fetch(isDemo ? "/api/admin/demo-card" : "/api/admin/card", {
         method: create ? "POST" : "PATCH",
         body: JSON.stringify({ card: values }),
       });
@@ -60,7 +62,9 @@ export default function CardForm({
 
   return (
     <div className="flex flex-col mb-6">
-      <h2 className="font-bold text-primary text-xl mb-8">Karta</h2>
+      <h2 className="font-bold text-primary text-xl mb-8">
+        {isDemo ? "Karta Demo" : "Karta"}
+      </h2>
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6">
         {(type === "NHIE" || type === "TB" || type === "JINX") && (
           <TextField
