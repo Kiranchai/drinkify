@@ -76,9 +76,9 @@ model Product {
   Invoice       Invoice[]  @relation("InvoiceToProduct")
   owners        User[]     @relation("ProductToUser")
   type          GameType?
-  isPublished   Boolean?
-  isBestseller  Boolean?
-  isNew         Boolean?
+  isPublished   Boolean?   @default(false)
+  isBestseller  Boolean?   @default(false)
+  isNew         Boolean?   @default(false)
 }
 
 model Invoice {
