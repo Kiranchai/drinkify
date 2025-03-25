@@ -54,8 +54,7 @@ export default function page() {
               <p>
                 <strong>Administrator Serwisu / Danych</strong> -
                 Administratorem Serwisu oraz Administratorem Danych (dalej
-                Administrator) jest osoba fizyczna "Norbert Sadawa" zamieszkała
-                w Elblągu, świadcząca usługi drogą elektroniczną za
+                Administrator) jest osoba fizyczna świadcząca usługi drogą elektroniczną za
                 pośrednictwem Serwisu
               </p>
             </li>
