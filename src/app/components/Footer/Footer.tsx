@@ -1,7 +1,7 @@
 import styles from "@/app/components/Footer/Footer.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/logo-no-background.png";
+import logo from "../../../../public/logo-no-background.png";
 import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {

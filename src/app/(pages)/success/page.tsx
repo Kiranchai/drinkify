@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import { BsCheck2Circle } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "public/logo-no-background.png";
+import logo from "../../../../public/logo-no-background.png";
 
 export default function Success() {
   const { clearCart } = useCart();

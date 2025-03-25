@@ -9,11 +9,11 @@ import {
 } from "react-icons/md";
 import { BiDrink } from "react-icons/bi";
 import Link from "next/link";
-import phoneMockup from "public/phone_mockup.png";
-import partyImage from "public/party_1.jpg";
-import partyImage2 from "public/party_2.jpg";
-import partyImage3 from "public/party_3.jpg";
-import cards from "public/cards.webp";
+import phoneMockup from "../../../public/phone_mockup.png";
+import partyImage from "../../../public/party_1.jpg";
+import partyImage2 from "../../../public/party_2.jpg";
+import partyImage3 from "../../../public/party_3.jpg";
+import cards from "../../../public/cards.webp";
 import { Metadata } from "next";
 import { getPostData } from "../utils/posts";
 import prisma from "../utils/db";

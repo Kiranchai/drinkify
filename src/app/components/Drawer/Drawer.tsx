@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import logo from "public/logo-no-background.png";
+import logo from "../../../../public/logo-no-background.png";
 import Link from "next/link";
 import { CgMenuGridR } from "react-icons/cg";
 import { TbCardsFilled } from "react-icons/tb";
