@@ -22,9 +22,12 @@ export const metadata: Metadata = {
   title: "Drinkify - gry imprezowe zawsze na wyciągnięcie ręki",
 };
 
+const posts = ["5-najlepszych-gier-imprezowych", "alkokarty-przewodnik"];
+
 export const dynamic = "force-dynamic";
 export default async function Home() {
-  const post = await getPostData("5-najlepszych-gier-imprezowych");
+  const postsData = await Promise.all(posts.map((post) => getPostData(post)));
+
   const featuredProducts = await prisma.product.findMany({
     select: {
       name: true,
@@ -263,32 +266,36 @@ export default async function Home() {
         <h2 className="text-5xl font-semibold mb-16 mt-4 text-center">
           Nasz blog!
         </h2>
-        <div className="flex gap-4">
-          <article className="aspect-square max-w-xs bg-fuchsia-950 rounded-md shadow-md shadow-gray-800">
-            <div className="relative aspect-video overflow-hidden">
-              <Image
-                src={post.metadata.thumbnail}
-                alt={post.metadata.thumbnailAlt}
-                fill
-                className="object-cover rounded-t-md overflow-hidden"
-              />
-            </div>
-            <div className="p-4 flex flex-col gap-1 ">
-              <span className="text-sm opacity-80">
-                {post.metadata.createdAt}
-              </span>
-              <header className=" font-bold text-xl mb-2">
-                {post.metadata.title}
-              </header>
-              <p className="text-sm opacity-80">{post.metadata.description}</p>
-              <Link
-                href={post.metadata.url}
-                className="mt-4 bg-fuchsia-900 max-w-fit px-4 py-2 rounded-md"
-              >
-                Czytaj dalej
-              </Link>
-            </div>
-          </article>
+        <div className="flex gap-12 flex-wrap justify-center ">
+          {postsData.map((post) => (
+            <article className="aspect-square max-w-xs bg-fuchsia-950 rounded-md shadow-md shadow-gray-800">
+              <div className="relative aspect-video overflow-hidden">
+                <Image
+                  src={post.metadata.thumbnail}
+                  alt={post.metadata.thumbnailAlt}
+                  fill
+                  className="object-cover rounded-t-md overflow-hidden"
+                />
+              </div>
+              <div className="p-4 flex flex-col gap-1 ">
+                <span className="text-sm opacity-80">
+                  {post.metadata.createdAt}
+                </span>
+                <header className=" font-bold text-xl mb-2">
+                  {post.metadata.title}
+                </header>
+                <p className="text-sm opacity-80">
+                  {post.metadata.description}
+                </p>
+                <Link
+                  href={post.metadata.url}
+                  className="mt-4 bg-fuchsia-900 max-w-fit px-4 py-2 rounded-md"
+                >
+                  Czytaj dalej
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
     </main>
