@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import gameStyles from "@/app/(pages)/cards/[pubName]/page.module.css";
 import BuyNowButton from "@/app/components/BuyNowButton/BuyNowButton";
 import Image from "next/image";
+import Link from "next/link";
 import Game from "@/app/components/Game/Game";
 import prisma from "@/app/utils/db";
 import type { Metadata } from "next";
@@ -23,12 +24,70 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       DemoCard: {},
     },
   });
+
   if (product) {
+    const cleanDescription = product.description
+      .replace(/<br\s*\/?>/gi, " ")
+      .replace(/<[^>]*>/g, "")
+      .substring(0, 160);
+
     return {
-      title: `${product.name} | Drinkify`,
-      description: product.description.split("<br>")[0],
+      title: `${product.name} - Interaktywna Gra Imprezowa | Drinkify`,
+      description: `${cleanDescription}. Kup ${product.name} za ${product.price} zł i ciesz się zabawą na każdej imprezie. Dostęp natychmiastowy na wszystkich urządzeniach.`,
+      keywords: [
+        "gra imprezowa",
+        "gry dla dorosłych",
+        "zabawa na imprezie",
+        "gry alkoholowe",
+        product.name.toLowerCase(),
+        "drinkify",
+        "gry towarzyskie",
+        "rozrywka",
+      ],
+      authors: [{ name: "Drinkify" }],
+      creator: "Drinkify",
+      publisher: "Drinkify",
+      formatDetection: {
+        email: false,
+        address: false,
+        telephone: false,
+      },
+      openGraph: {
+        title: `${product.name} - Gra Imprezowa`,
+        description: `${cleanDescription}. Dostęp natychmiastowy za ${product.price} zł.`,
+        url: `https://drinkify.pl/offer/${product.pubName}`,
+        siteName: "Drinkify - Gry Imprezowe",
+        images: [
+          {
+            url: product.thumbnail,
+            width: 1200,
+            height: 630,
+            alt: `${product.name} - Gra imprezowa Drinkify`,
+          },
+        ],
+        locale: "pl_PL",
+        type: "website",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${product.name} - Gra Imprezowa`,
+        description: cleanDescription,
+        images: [product.thumbnail],
+        creator: "@drinkify_pl",
+      },
       alternates: {
         canonical: `https://drinkify.pl/offer/${product.pubName}`,
+      },
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
       },
     };
   }
@@ -57,6 +116,33 @@ export default async function Product({ params }) {
     return NotFound();
   }
 
+  // Fetch other products for the "Other Games" section
+  const otherProducts = await prisma.product.findMany({
+    where: {
+      isPublished: true,
+      pubName: {
+        not: pubName, // Exclude current product
+      },
+    },
+    select: {
+      pubName: true,
+      name: true,
+      price: true,
+      thumbnail: true,
+      isBestseller: true,
+      isNew: true,
+      description: true,
+      rating: true,
+      reviewCount: true,
+    },
+    orderBy: [
+      { isBestseller: "desc" },
+      { isNew: "desc" },
+      { createdAt: "desc" },
+    ],
+    take: 3, // Limit to 3 other products
+  });
+
   const priceValidUntil = new Date();
   priceValidUntil.setDate(priceValidUntil.getDate() + 30);
 
@@ -64,20 +150,60 @@ export default async function Product({ params }) {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    image: product.thumbnail,
-    description: product.description,
+    image: [product.thumbnail],
+    description: product.description.replace(/<[^>]*>/g, ""),
+    sku: product.pubName,
+    mpn: product.pubName,
+    brand: {
+      "@type": "Brand",
+      name: "Drinkify",
+      logo: "https://drinkify.pl/logo-no-background.png",
+      url: "https://drinkify.pl",
+    },
+    manufacturer: {
+      "@type": "Organization",
+      name: "Drinkify",
+      url: "https://drinkify.pl",
+    },
+    category: "Gry Imprezowe",
+    audience: {
+      "@type": "Audience",
+      audienceType: "Dorośli 18+",
+    },
     offers: {
       "@type": "Offer",
+      url: `https://drinkify.pl/offer/${product.pubName}`,
       availability: "https://schema.org/InStock",
       price: product.price,
       priceCurrency: "PLN",
       priceValidUntil: priceValidUntil.toISOString().split("T")[0],
+      itemCondition: "https://schema.org/NewCondition",
+      seller: {
+        "@type": "Organization",
+        name: "Drinkify",
+        url: "https://drinkify.pl",
+      },
       shippingDetails: {
         "@type": "OfferShippingDetails",
         shippingRate: {
           "@type": "MonetaryAmount",
           value: "0",
           currency: "PLN",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 0,
+            maxValue: 0,
+            unitCode: "DAY",
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 0,
+            maxValue: 0,
+            unitCode: "DAY",
+          },
         },
         shippingDestination: [
           {
@@ -88,105 +214,347 @@ export default async function Product({ params }) {
         ],
       },
     },
-    brand: {
-      "@type": "Brand",
-      name: "Drinkify",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating?.toString() || "4.8",
+      reviewCount: product.reviewCount?.toString() || "127",
+      bestRating: "5",
+      worstRating: "1",
     },
   };
 
   return (
     <>
-      <section className={styles.product_section}>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <div
-          style={{
-            background: "var(--bg-color)",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
-          <div className={styles.product_grid_container}>
-            <div
-              className={`${styles.product_grid_item} ${styles.img_wrapper}`}
-            >
-              {product.backgroundImg && (
-                <Image
-                  src={product.backgroundImg}
-                  alt="drink"
-                  // fill
-                  // sizes="(max-width:440px) 100vw, 600px"
-                  className="object-contain"
-                  width={600}
-                  height={600}
-                  priority
-                />
-              )}
-            </div>
-            <div className={`${styles.product_grid_item} ${styles.details}`}>
-              <h1 className={styles.product_title}>{product?.name}</h1>
-              <span className={styles.product_price}>{product?.price} zł</span>
-              <p
-                className={styles.product_description}
-                dangerouslySetInnerHTML={{ __html: product?.description }}
-              ></p>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
+      {/* Hero Section */}
+      <section className={styles.hero_section}>
+        <div className={styles.hero_container}>
+          <div className={styles.hero_content}>
+            <div className={styles.product_image_container}>
+              {product.isBestseller && (
+                <span className={styles.bestseller_badge}>BESTSELLER</span>
+              )}
+              {product.isNew && (
+                <span className={styles.new_badge}>NOWOŚĆ!</span>
+              )}
+              <div className={styles.product_image_wrapper}>
+                {product.backgroundImg && (
+                  <Image
+                    src={product.backgroundImg}
+                    alt={`${product.name} - Gra imprezowa`}
+                    width={600}
+                    height={600}
+                    priority
+                    className={styles.product_image}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className={styles.product_details}>
+              <h1 className={styles.product_title}>{product.name}</h1>
+
+              <div className={styles.rating_container}>
+                <div className={styles.stars}>
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <span key={i}>
+                      {i < Math.floor(product.rating || 4.8) ? "★" : "☆"}
+                    </span>
+                  ))}
+                </div>
+                <span className={styles.rating_text}>
+                  {(product.rating || 4.8).toFixed(1)} (
+                  {product.reviewCount || 127} opinii)
+                </span>
+              </div>
+
+              <div className={styles.price_container}>
+                <span className={styles.current_price}>{product.price} zł</span>
+                <span className={styles.price_note}>Jednorazowa płatność</span>
+              </div>
+
+              <div
+                className={styles.product_description}
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              />
+
+              <div className={styles.product_features}>
+                <div className={styles.feature_item}>
+                  <svg
+                    className={styles.feature_icon}
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M17 2v2h3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2h2v2h6V2h2zM4 9v10h16V9H4zm2 2h2v2H6v-2zm0 4h2v2H6v-2zm4-4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-4h2v2h-2v-2z" />
+                  </svg>
+                  <span>Dostęp na wszystkich urządzeniach</span>
+                </div>
+                <div className={styles.feature_item}>
+                  <svg
+                    className={styles.feature_icon}
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M13 3L4 14h6.5l-.5 4L19 7h-6.5l.5-4z" />
+                  </svg>
+                  <span>Natychmiastowy dostęp</span>
+                </div>
+                <div className={styles.feature_item}>
+                  <svg
+                    className={styles.feature_icon}
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                  <span>Dostęp na zawsze</span>
+                </div>
+                <div className={styles.feature_item}>
+                  <svg
+                    className={styles.feature_icon}
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                  <span>Gotowe do zabawy</span>
+                </div>
+              </div>
+
+              <div className={styles.cta_container}>
+                <BuyNowButton product={product} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Demo Section */}
+      <section className={styles.demo_section}>
+        <div className={styles.section_container}>
+          <h2 className={styles.section_title}>Wypróbuj demo gry</h2>
+          <p className={styles.section_subtitle}>
+            Zobacz jak wygląda gra w akcji dzięki darmowej wersji
+            demonstracyjnej
+          </p>
+        </div>
+        <div className={styles.demo_game_container}>
+          <div className={styles.demo_game_wrapper}>
+            <Game
+              cards={product.DemoCard}
+              isDemo={true}
+              cardImage={product.backgroundImg}
+              gameType={product.type}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Rules Section */}
+      {product?.rules && (
+        <section className={styles.rules_section}>
+          <div className={styles.section_container}>
+            <h2 className={styles.section_title}>Zasady gry</h2>
+            <div
+              className={styles.rules_content}
+              dangerouslySetInnerHTML={{ __html: product.rules }}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Product Benefits Section */}
+      <section className={styles.benefits_section}>
+        <div className={styles.section_container}>
+          <h2 className={styles.section_title}>
+            Dlaczego warto wybrać {product.name}?
+          </h2>
+          <div className={styles.benefits_grid}>
+            <div className={styles.benefit_item}>
+              <div className={styles.benefit_icon}>
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                </svg>
+              </div>
+              <h3>Profesjonalnie przygotowane</h3>
+              <p>
+                Każda karta została starannie opracowana przez nasz zespół, aby
+                zapewnić maksymalną zabawę.
+              </p>
+            </div>
+            <div className={styles.benefit_item}>
+              <div className={styles.benefit_icon}>
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 1v6h6V1H4zm0 16h6v-6H4v6zM14 7v6h6V7h-6zm0 10h6v-6h-6v6z" />
+                </svg>
+              </div>
+              <h3>Idealne dla grup</h3>
+              <p>
+                Gra została zaprojektowana tak, aby wszystkie osoby mogły
+                aktywnie uczestniczyć w zabawie.
+              </p>
+            </div>
+            <div className={styles.benefit_item}>
+              <div className={styles.benefit_icon}>
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </div>
+              <h3>Niekończąca się zabawa</h3>
+              <p>
+                Dzięki dużej liczbie kart, każda rozgrywka będzie inna i pełna
+                niespodzianek.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works Section */}
+      <section className={styles.how_it_works_section}>
+        <div className={styles.section_container}>
+          <h2 className={styles.section_title}>Jak to działa?</h2>
+          <div className={styles.steps_container}>
+            <div className={styles.step_item}>
+              <div className={styles.step_number}>1</div>
+              <h3>Zaloguj się</h3>
+              <p>
+                Użyj swojego konta, aby uzyskać dostęp do zakupionej gry na
+                dowolnym urządzeniu.
+              </p>
+            </div>
+            <div className={styles.step_item}>
+              <div className={styles.step_number}>2</div>
+              <h3>Kup grę</h3>
+              <p>
+                Dokonaj bezpiecznej płatności i otrzymaj natychmiastowy dostęp.
+              </p>
+            </div>
+            <div className={styles.step_item}>
+              <div className={styles.step_number}>3</div>
+              <h3>Zacznij zabawę</h3>
+              <p>Otwórz grę i ciesz się wspaniałą zabawą ze znajomymi!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className={styles.faq_section}>
+        <div className={styles.section_container}>
+          <h2 className={styles.section_title}>Często zadawane pytania</h2>
+          <div className={styles.faq_grid}>
+            <div className={styles.faq_item}>
+              <h3>Czy gra działa na telefonach?</h3>
+              <p>
+                Tak! Nasza gra została zaprojektowana tak, aby działała płynnie
+                na wszystkich urządzeniach - telefonach, tabletach i
+                komputerach.
+              </p>
+            </div>
+            <div className={styles.faq_item}>
+              <h3>Ile osób może grać jednocześnie?</h3>
+              <p>
+                Gra jest idealna dla grup od 2 do 10+ osób. Im więcej graczy,
+                tym więcej zabawy!
+              </p>
+            </div>
+            <div className={styles.faq_item}>
+              <h3>Czy to jednorazowa płatność?</h3>
+              <p>
+                Tak! Płacisz raz i masz dostęp do gry na zawsze. Brak
+                miesięcznych opłat czy ukrytych kosztów.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Other Games Section */}
+      <section className={styles.other_games_section}>
+        <div className={styles.section_container}>
+          <h2 className={styles.section_title}>Sprawdź nasze inne gry</h2>
+          <p className={styles.section_subtitle}>
+            Odkryj więcej świetnych gier imprezowych z naszej kolekcji
+          </p>
+          <div className={styles.other_games_grid}>
+            {otherProducts.map((otherProduct) => (
+              <div
+                key={otherProduct.pubName}
+                className={styles.other_game_card}
+              >
+                <Link
+                  href={`/offer/${otherProduct.pubName}`}
+                  className={styles.other_game_link}
+                >
+                  {otherProduct.isBestseller && (
+                    <span className={styles.other_game_bestseller}>
+                      BESTSELLER
+                    </span>
+                  )}
+                  {otherProduct.isNew && (
+                    <span className={styles.other_game_new}>NOWOŚĆ!</span>
+                  )}
+
+                  <div className={styles.other_game_image_wrapper}>
+                    <Image
+                      src={otherProduct.thumbnail}
+                      alt={`${otherProduct.name} - Gra imprezowa`}
+                      width={200}
+                      height={200}
+                      className={styles.other_game_image}
+                    />
+                  </div>
+
+                  <div className={styles.other_game_content}>
+                    <h3 className={styles.other_game_title}>
+                      {otherProduct.name}
+                    </h3>
+                    <p className={styles.other_game_description}>
+                      {otherProduct.description
+                        ?.replace(/<[^>]*>/g, "")
+                        .substring(0, 80)}
+                      ...
+                    </p>
+                    <div className={styles.other_game_price}>
+                      {otherProduct.price} zł
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <div className={styles.view_all_games}>
+            <Link href="/offer" className={styles.view_all_button}>
+              Zobacz wszystkie gry
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className={styles.final_cta_section}>
+        <div className={styles.section_container}>
+          <div className={styles.final_cta_content}>
+            <h2>Gotowy na niezapomnianą zabawę?</h2>
+            <p>
+              Dołącz do tysięcy zadowolonych klientów i zamów {product.name} już
+              dziś!
+            </p>
+            <div className={styles.final_cta_button}>
               <BuyNowButton product={product} />
             </div>
-          </div>
-          <div className={styles.custom_shape_divider_bottom_1681672643}>
-            <svg
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-                opacity=".25"
-                className={styles.shape_fill}
-              ></path>
-              <path
-                d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
-                opacity=".5"
-                className={styles.shape_fill}
-              ></path>
-              <path
-                d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
-                className={styles.shape_fill}
-              ></path>
-            </svg>
+            <div className={styles.trust_indicators}>
+              <span>✅ Natychmiastowy dostęp</span>
+              <span>✅ Gwarancja satysfakcji</span>
+            </div>
           </div>
         </div>
-        <div
-          className={gameStyles.game_section}
-          style={{
-            width: "100%",
-            backgroundColor: "#1e0324",
-            paddingTop: "10rem",
-            height: "120vh",
-          }}
-        >
-          <Game
-            cards={product.DemoCard}
-            isDemo={true}
-            cardImage={product.backgroundImg}
-            gameType={product.type}
-          />
-        </div>
-        {product?.rules && (
-          <section className={styles.rules_container}>
-            <div
-              className={styles.rules_inner}
-              dangerouslySetInnerHTML={{ __html: product.rules }}
-            ></div>
-          </section>
-        )}
       </section>
     </>
   );

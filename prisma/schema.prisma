@@ -70,6 +70,8 @@ model Product {
   backgroundImg String?
   rules         String?
   priority      Int?
+  rating        Float?     @default(4.8)
+  reviewCount   Int?       @default(127)
   cards         Card[]
   DemoCard      DemoCard[]
   GiftCode      GiftCode[]

@@ -28,7 +28,7 @@
   place-items: center;
   gap: 1rem;
   width: 100%;
-  max-width: 70rem;
+  max-width: 85rem;
   padding-bottom: 6rem;
 }
 
@@ -37,8 +37,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 2rem;
+  align-items: flex-start;
+  gap: 1rem;
   padding: 0.5rem 1rem;
   z-index: 20;
 }
@@ -72,16 +72,91 @@
 
 .welcome_header {
   font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: clamp(4rem, 6vw, 6rem);
+  line-height: clamp(3rem, 5.5vw, 4.5rem);
   color: #ffffff;
   font-weight: 700;
   text-shadow: 2px 2px 2px black;
+  text-align: left;
+  margin-bottom: 1rem;
 }
 
 .welcome_subtitle {
   width: 100%;
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: #e0e0e0;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  max-width: 500px;
+}
+
+.welcome_cta_container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.welcome_btn_primary {
+  background: linear-gradient(135deg, #740000, #a50000);
+  min-width: 12rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  text-shadow: 1px 1px 1px black;
+  transition: background 0.2s ease;
+  box-shadow: 0 4px 15px rgba(116, 0, 0, 0.3);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border: none;
+}
+
+.welcome_btn_primary:hover {
+  background: linear-gradient(135deg, #580000, #740000);
+}
+
+.welcome_btn_secondary {
+  background: transparent;
+  border: 2px solid #8b0000;
+  min-width: 12rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  transition: background 0.2s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.welcome_btn_secondary:hover {
+  background: #8b0000;
+}
+
+.welcome_features {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.feature_item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  opacity: 0.9;
+}
+
+.feature_icon {
+  font-size: 1.2rem;
+  color: #8b0000;
 }
 
 .custom_shape_divider_bottom_1678748201 {
@@ -142,8 +217,19 @@
   align-items: center;
   height: 100%;
   text-align: center;
-  gap: 0.4rem;
-  padding: 0.5rem 1.5rem;
+  gap: 0.8rem;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.advantage_item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .advantage_item_icon {
@@ -152,18 +238,22 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 0.75rem;
+  color: #d920d2;
+  text-shadow: 0 0 15px rgba(217, 32, 210, 0.3);
 }
 
 .advantage_item_title {
-  font-size: clamp(1.2rem, 5vw, 1.4rem);
-  font-weight: 400;
+  font-size: clamp(1.3rem, 5vw, 1.5rem);
+  font-weight: 600;
   margin-bottom: 0.75rem;
+  color: #ffffff;
 }
 
 .advantage_item_subtitle {
   font-size: clamp(0.9rem, 4vw, 1rem);
-  opacity: 0.7;
+  opacity: 0.8;
   font-weight: 300;
+  line-height: 1.5;
 }
 
 .benefits_section {
@@ -178,40 +268,71 @@
   position: relative;
 }
 
+.benefits_content {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 600px;
+}
+
+.benefits_main_header {
+  margin-top: 5rem;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.benefits_subtitle {
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
+  color: #e0e0e0;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
 .benefits_grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   max-width: 90rem;
-  -webkit-box-shadow: 3px 2px 23px -9px rgb(131, 131, 131);
-  -moz-box-shadow: 3px 2px 23px -9px rgb(131, 131, 131);
-  box-shadow: 3px 2px 23px -9px rgb(131, 131, 131);
-  margin-block: 10rem;
-  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  margin-block: 3rem;
+  border-radius: 1.5rem;
   overflow: hidden;
-  /* margin-top: 10rem; */
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .benefits_icon_wrapper {
-  background-color: #300630;
-  padding: 1rem;
+  background: linear-gradient(135deg, #300630, #4a0a4a);
+  padding: 1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 3rem;
-  margin-bottom: 1rem;
-  -webkit-box-shadow: 3px 2px 23px -6px rgba(29, 4, 18, 1);
-  -moz-box-shadow: 3px 2px 23px -6px rgba(29, 4, 18, 1);
-  box-shadow: 3px 2px 23px -6px rgba(29, 4, 18, 1);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 25px rgba(48, 6, 48, 0.4);
+  transition: all 0.3s ease;
+}
+
+.benefits_icon_wrapper:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(48, 6, 48, 0.6);
 }
 
 .benefits_icon {
   font-size: 3rem;
+  color: #d920d2;
 }
 
 .benefits_col {
   display: grid;
   grid-template-rows: 1fr 1fr;
   place-items: center;
+  transition: all 0.3s ease;
+}
+
+.benefits_col:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .benefits_header_wrapper {
@@ -226,21 +347,29 @@
 }
 
 .benefits_header {
-  font-size: clamp(1.4rem, 5vw, 1.6rem);
+  font-size: clamp(1.5rem, 5vw, 1.8rem);
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .benefits_description {
   padding: 0.5rem;
-  font-size: clamp(0.9rem, 3.5vw, 1rem);
-  opacity: 0.7;
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  opacity: 0.8;
+  line-height: 1.5;
 }
 
 .benefits_img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* border-radius: 1rem; */
-  filter: brightness(75%) saturate(120%);
+  filter: brightness(75%) saturate(120%) contrast(1.1);
+  transition: all 0.3s ease;
+}
+
+.benefits_col:hover .benefits_img {
+  filter: brightness(85%) saturate(130%) contrast(1.2);
+  transform: scale(1.02);
 }
 
 .welcome_header_highlight {
@@ -294,6 +423,39 @@
   margin-bottom: 3rem;
 }
 
+.product_stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(138, 0, 138, 0.1);
+  border-radius: 1rem;
+  border: 1px solid rgba(138, 0, 138, 0.2);
+}
+
+.stat_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat_number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d920d2;
+  text-shadow: 0 0 10px rgba(217, 32, 210, 0.3);
+}
+
+.stat_label {
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .product_header {
   font-size: clamp(2.5rem, 5vw, 3rem);
   margin-bottom: 1.5rem;
@@ -319,13 +481,23 @@
 .see_more_btn {
   margin-top: 1rem;
   width: fit-content;
-  max-width: 10rem;
+  min-width: 12rem;
   text-align: center;
-  padding: 0.5rem 0.25rem;
-  background-color: #6a0d6a;
-  border-radius: 0.4rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #6a0d6a, #8a008a);
+  border-radius: 0.5rem;
   font-size: 1rem;
-  box-shadow: 3px 3px 5px rgb(37, 37, 37);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(106, 13, 106, 0.3);
+  transition: all 0.3s ease;
+}
+
+.see_more_btn:hover {
+  background: linear-gradient(135deg, #4a0d4a, #6a0d6a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(106, 13, 106, 0.4);
 }
 
 @media only screen and (max-width: 1100px) {
@@ -343,7 +515,8 @@
 
 @media only screen and (max-width: 530px) {
   .description_img_wrapper > img {
-    /* height: fit-content; */
+    padding: 1rem;
+    max-width: 30rem;
   }
 }
 
@@ -370,18 +543,42 @@
   }
 
   .welcome_header {
-    text-align: center;
-    line-height: 3.5rem;
-    padding: 0 1rem;
+    text-align: left;
+    line-height: clamp(2.5rem, 5vw, 3.5rem);
+    padding: 0;
+    margin: 0 0 1rem 0;
   }
 
   .welcome_container_grid_item {
     padding: 1rem 1rem;
     aspect-ratio: 0;
+    align-items: flex-start;
   }
 
   .welcome_btn {
-    align-self: center;
+    align-self: flex-start;
+  }
+
+  .welcome_btn_primary,
+  .welcome_btn_secondary {
+    min-width: 8rem;
+    font-size: 0.8rem;
+    padding: 0.8rem 1rem;
+    flex: 1;
+  }
+
+  .welcome_cta_container {
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+  }
+
+  .welcome_features {
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+
+  .feature_item {
+    font-size: 0.8rem;
   }
 
   .welcome_container {
@@ -422,6 +619,7 @@
 
 @media only screen and (max-width: 290px) {
   .welcome_header {
-    padding: 0 1rem;
+    padding: 0;
+    margin: 0 0 1rem 0;
   }
 }

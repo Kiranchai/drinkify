@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Product" ADD COLUMN     "rating" DOUBLE PRECISION DEFAULT 4.8,
+ADD COLUMN     "reviewCount" INTEGER DEFAULT 127,
+ALTER COLUMN "isBestseller" SET DEFAULT false,
+ALTER COLUMN "isNew" SET DEFAULT false,
+ALTER COLUMN "isPublished" SET DEFAULT false;

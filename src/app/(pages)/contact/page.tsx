@@ -1,4 +1,4 @@
-import styles from "./page.module.css";
+﻿import styles from "./page.module.css";
 import { MdOutlineMail } from "react-icons/md";
 import { FaInstagram, FaTiktok, FaFacebookF } from "react-icons/fa";
 import Link from "next/link";
@@ -39,9 +39,14 @@ export default function page() {
     <section className={`mh ${styles.contact_section}`}>
       <h1 className={styles.header}>Skontaktuj się z nami</h1>
       <div className={styles.items_wrapper}>
-        {contactItems.map((item) => {
+        {contactItems.map((item, idx) => {
           return (
-            <ContactItem name={item.name} icon={item.icon} link={item.link} />
+            <ContactItem
+              key={idx}
+              name={item.name}
+              icon={item.icon}
+              link={item.link}
+            />
           );
         })}
       </div>

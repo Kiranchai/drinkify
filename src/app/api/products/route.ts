@@ -13,6 +13,8 @@ export async function GET(request: NextRequest) {
       price: true,
       isBestseller: true,
       isNew: true,
+      rating: true,
+      reviewCount: true,
     },
     where: {
       isPublished: true,
