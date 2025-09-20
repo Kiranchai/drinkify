@@ -1,6 +1,7 @@
 .home_section {
   background-color: black;
   position: relative;
+  overflow-x: hidden;
 }
 
 .welcome {
@@ -17,7 +18,8 @@
   position: absolute;
   z-index: 0;
   opacity: 0.1;
-  width: 70rem;
+  width: min(70rem, 100vw);
+  max-width: 100%;
   transform: translate(0, -10%);
 }
 
@@ -100,7 +102,7 @@
 
 .welcome_btn_primary {
   background: linear-gradient(135deg, #740000, #a50000);
-  min-width: 12rem;
+  min-width: min(12rem, 45vw);
   text-align: center;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
@@ -121,7 +123,7 @@
 .welcome_btn_secondary {
   background: transparent;
   border: 2px solid #8b0000;
-  min-width: 12rem;
+  min-width: min(12rem, 45vw);
   text-align: center;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
@@ -187,6 +189,8 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 1rem;
+  overflow-x: hidden;
+  width: 100%;
   /* min-height: 80vh; */
 }
 
@@ -208,10 +212,12 @@
   width: 100%;
   max-width: 90rem;
   margin-bottom: 10rem;
+  gap: 2rem;
 }
 
 .advantage_item {
   font-size: 3rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -514,6 +520,15 @@
 }
 
 @media only screen and (max-width: 530px) {
+  .product_description {
+    margin-inline: 1rem;
+    padding: 1rem 0;
+  }
+
+  .product_left {
+    padding: 0 0.5rem;
+  }
+
   .description_img_wrapper > img {
     padding: 1rem;
     max-width: 30rem;
@@ -530,7 +545,12 @@
 
 @media only screen and (max-width: 800px) {
   .product_description {
-    margin-inline: 0.5rem;
+    margin-inline: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .product_left {
+    padding: 0 0.5rem;
   }
 
   .description_img_wrapper > img {
@@ -539,7 +559,9 @@
   }
 
   .welcome {
-    padding: 1rem 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 100vw;
   }
 
   .welcome_header {
@@ -561,7 +583,7 @@
 
   .welcome_btn_primary,
   .welcome_btn_secondary {
-    min-width: 8rem;
+    min-width: min(8rem, 40vw);
     font-size: 0.8rem;
     padding: 0.8rem 1rem;
     flex: 1;
@@ -570,6 +592,8 @@
   .welcome_cta_container {
     flex-wrap: nowrap;
     gap: 0.75rem;
+    width: 100%;
+    max-width: 100%;
   }
 
   .welcome_features {
