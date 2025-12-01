@@ -40,7 +40,19 @@ const Footer = () => {
           <FaTiktok />
         </Link>
       </div>
-      <span className={styles.copyright_span}>&copy; 2025 Drinkify</span>
+      <div className={styles.footer_bottom}>
+        <span className={styles.copyright_span}>&copy; 2025 Drinkify</span>
+        <span className={styles.made_by}>
+          Made by{" "}
+          <Link
+            href="https://snsolutions.pl"
+            target="_blank"
+            className={styles.sn_link}
+          >
+            SN Solutions
+          </Link>
+        </span>
+      </div>
     </footer>
   );
 };
